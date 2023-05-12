@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;500&family=Roboto:wght@300&display=swap");
+
+* {
+font-family: "Roboto", sans-serif;
+font-family: "Roboto Flex", sans-serif;
+}
+a {
+text-decoration: none;
+color: inherit;
+}
+.color-pink {
+    color: #ff2f6e;
+}
+li {
+    list-style: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.comment-card {
+    width: 640px;
+    height: 223px;
+    background-color: #f2f2f2;
+    margin: 20px auto;
+    border-radius: 6px;
+}
+.profile-image-form {
+    width: 32px;
+    height: 32px;
+    border: 0.5px solid lightgray;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.profile-image-form img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.comment-score {
+    width: 55px;
+    height: 26px;
+    border-radius: 13px;
+    border: 0.5px solid lightgray;
+    background-color: white;
+    text-align: center;
+    line-height: 26px;
+}
+.comment-content {
+    min-height: 75px;
+    height: 75px;
+}
+.font-15 {
+    font-size: 15px;
+}
+.font-14 {
+    font-size: 14px;
+}

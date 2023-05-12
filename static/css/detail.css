@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;500&family=Roboto:wght@300&display=swap");
+
+* {
+font-family: "Roboto", sans-serif;
+font-family: "Roboto Flex", sans-serif;
+}
+a {
+text-decoration: none;
+color: inherit;
+}
+h1 {
+    font-size: 25px;
+}
+h2 {
+    font-size: 19px;
+}
+.detail-banner_wrapper {
+width: 100%;
+height: 400px;
+overflow: hidden;
+z-index: -1;
+position: relative;
+}
+.filter {
+width: 100%;
+height: 100%;
+position: absolute;
+background: linear-gradient(black, transparent, transparent, black);
+}
+.detail-banner_wrapper img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+.detail-movie_info {
+position: relative;
+padding-bottom: 220px;
+}
+.basic-info {
+position: absolute;
+top: 370px;
+max-width: 960px;
+margin-left: calc(100vw * 0.25);
+margin-right: calc(100vw * 0.25);
+}
+.basic-info div:nth-child(2) {
+width: calc(100vw * 0.38);
+}
+.detail-poster_wrapper {
+width: 160px;
+height: 230px;
+overflow: hidden;
+border: 1px solid lightgray;
+border-radius: 5px;
+}
+.detail-poster_wrapper img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+main section:nth-child(2) {
+background-color: #f8f8f8;
+}
+main section:nth-child(2) > div > div {
+border-radius: 0.5rem;
+}
+.detail-info {
+margin-left: calc(100vw * 0.25);
+margin-right: calc(100vw * 0.25);
+}
+.vertical-line {
+height: 60px;
+max-width: 1px;
+background-color: lightgray;
+}
+.feature-btn {
+    transition: all 0.1s linear;
+}
+.feature-btn:hover {
+    transform: scale(1.1);
+}
+.font-15 {
+font-size: 15px;
+}
+.font-14 {
+font-size: 14px;
+}
+.font-13 {
+font-size: 13px;
+}
+.font-12 {
+font-size: 12px;
+}
+.color-pink {
+    color: #ff2f6e;
+}
+
+/* 별점 드래그 */
+.rating_box {
+    display: flex;
+}
+
+.rating {
+    position: relative;
+    color: #ddd;
+    font-size: 30px;
+    text-align: center;
+}
+
+.rating input {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.rating_star {
+    width: 0;
+    color: #ffc107;
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+
+/* comment 관련 */
+.comment-card {
+    width: 295px;
+    height: 265px;
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    padding: 0px 12px;
+    list-style: none;
+}
+.profile-image-form {
+    width: 32px;
+    height: 32px;
+    border: 0.5px solid lightgray;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.profile-image-form img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.comment-score {
+    width: 55px;
+    height: 26px;
+    border-radius: 13px;
+    border: 0.5px solid lightgray;
+    background-color: white;
+    text-align: center;
+    line-height: 26px;
+}
+.comment-content {
+    min-height: 120px;
+    height: 120px;
+}
+ul {
+    padding: 0;
+}
+li {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.card-wrapper {
+    display: flex;
+}
+/* carousel 스타일 수정 */
+.carousel-control-prev {
+    left: -10px;
+    position: absolute;
+    margin-top: 15%;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    opacity: 1;
+    background-color: white;
+    box-shadow: 1px 1px 5px gray;
+}
+.carousel-control-next {
+    right: -10px;
+    position: absolute;
+    margin-top: 15%;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    opacity: 1;
+    background-color: white;
+    box-shadow: 1px 1px 5px gray;
+}
+.carousel-control-prev span, .carousel-control-next span {
+    width: 18px;
+    height: 18px;
+}
