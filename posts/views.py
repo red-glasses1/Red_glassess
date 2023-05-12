@@ -21,12 +21,12 @@ def post_list(request):
 # post_detail = DetailView.as_view(model=Post,pk_url_kwarg='pk',template_name='post_detail.html')
 
 def detail(request):
-  return render(request, 'posts/detail.html')
+  return render(request, 'detail.html')
 
 
 def comments(request):
-  return render(request, 'posts/comments.html')
+  return render(request, 'comments.html')
 
 
 def comment(request):
-  return render(request, 'posts/comment.html')
+  return render(request, 'comment.html')
