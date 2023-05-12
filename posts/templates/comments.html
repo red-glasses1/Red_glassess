@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<title>코멘트 목록</title>
+<link rel="stylesheet" href="{% static 'css/comments.css' %}">
+{% endblock head %}
+
+{% block content %}
+<main>
+    <div class="border-bottom bg-white mt-5 p-3 pb-2 sticky-top">
+        <a href="{% url 'posts:detail' %}">
+            <span class="material-symbols-outlined color-pink">keyboard_backspace</span>
+        </a>
+        <h5><b>코멘트</b></h5>
+    </div>
+    <div class="container">
+        <li class="comment-card">
+            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                <a href="#" class="d-flex align-items-center gap-2 py-2">
+                    <div class="profile-image-form">
+                        <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                    </div>
+                    <div><b>시무리우리형</b></div>
+                </a>
+                <div class="comment-score font-14">★4.5</div>
+            </div>
+            <a href="#">
+                <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
+            </a>
+            <div class="d-flex align-items-center gap-3 border-bottom mb-2">
+                <div class="d-flex align-items-center gap-2 py-2">
+                    <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
+                    <div class="font-14">123</div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
+                    <div class="font-14">123</div>
+                </div>
+            </div>
+            <a href="#" class="color-pink">좋아요</a>
+        </li>
+        <li class="comment-card">
+            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                <a href="#" class="d-flex align-items-center gap-2 py-2">
+                    <div class="profile-image-form">
+                        <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                    </div>
+                    <div><b>시무리우리형</b></div>
+                </a>
+                <div class="comment-score font-14">★4.5</div>
+            </div>
+            <a href="#">
+                <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
+            </a>
+            <div class="d-flex align-items-center gap-3 border-bottom mb-2">
+                <div class="d-flex align-items-center gap-2 py-2">
+                    <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
+                    <div class="font-14">123</div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
+                    <div class="font-14">123</div>
+                </div>
+            </div>
+            <a href="#" class="color-pink">좋아요</a>
+        </li>
+        <li class="comment-card">
+            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                <a href="#" class="d-flex align-items-center gap-2 py-2">
+                    <div class="profile-image-form">
+                        <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                    </div>
+                    <div><b>시무리우리형</b></div>
+                </a>
+                <div class="comment-score font-14">★4.5</div>
+            </div>
+            <a href="#">
+                <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
+            </a>
+            <div class="d-flex align-items-center gap-3 border-bottom mb-2">
+                <div class="d-flex align-items-center gap-2 py-2">
+                    <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
+                    <div class="font-14">123</div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
+                    <div class="font-14">123</div>
+                </div>
+            </div>
+            <a href="#" class="color-pink">좋아요</a>
+        </li>
+    </div>
+</main>
+{% endblock content %}
+
+{% block script %}{% endblock script %}
