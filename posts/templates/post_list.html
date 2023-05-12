@@ -1,0 +1,35 @@
+{% load bootstrap4 %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% bootstrap_jquery %}
+</head>
+<body>
+<form action="post_search.html" method="get">
+        <input type="text" name="q" value="{{ q }}"/>
+        <input type="submit" value="검색" />
+</form>
+
+<table class="table table-bordered table-hover">
+{% for post in qs %}
+    <tr>
+        <td>
+            <ul>
+                <li><h3>{{ post.title }}</h3></li>
+                <li><img src="{{ post.image.url }}" alt="" style="width:100px;"></li>
+                <li><p>{{ post.content }}</p></li>
+            </ul>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+
+</body>
+</html>
