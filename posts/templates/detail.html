@@ -1,413 +1,531 @@
-{% extends 'base.html' %}
-{% load static %}
-
-
-{% block head %}
+{% extends 'base.html' %} {% load static %} {% block head %}
 <title>영화정보</title>
-<link rel="stylesheet" href="{% static 'css/detail.css' %}">
-{% endblock head %}
-
-{% block content %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}" />
+{% endblock head %} {% block content %}
 <main>
-    <!-- 영화 기본 정보 -->
-    <section class="detail-movie_info border-bottom">
-        <!-- 영화 이미지 배너 -->
-        <div class="detail-banner_wrapper">
-        <div class="filter"></div>
+  <!-- 영화 기본 정보 -->
+  <section class="detail-movie_info border-bottom">
+    <!-- 영화 이미지 배너 -->
+    <div class="detail-banner_wrapper">
+      <div class="filter"></div>
+      <img
+        src="https://www.digitaltrends.com/wp-content/uploads/2021/06/guardians.jpg?p=1"
+      />
+    </div>
+
+    <div class="d-flex gap-4 basic-info">
+      <div class="detail-poster_wrapper">
         <img
-            src="https://www.digitaltrends.com/wp-content/uploads/2021/06/guardians.jpg?p=1"
+          src="https://newsimg.sedaily.com/2023/02/28/29LXDZZ0OU_1.jpg"
+          alt=""
         />
+      </div>
+      <div class="d-flex flex-column">
+        <div class="mb-4 d-flex gap-2 text-secondary font-13">
+          <span>예매 순위</span>
+          <span class="text-white">1위(40%)</span>
+          <span>개봉</span>
+          <span class="text-white">8일째</span>
+          <span>누적 관객</span>
+          <span class="text-white">183만명</span>
+        </div>
+        <h1><b>가디언즈 오브 갤럭시: Volume 3</b></h1>
+        <div class="mb-2 text-secondary font-15">
+          2023・액션/모험/코미디・미국
+        </div>
+        <div class="mb-3 py-2 d-flex gap-3 border-top border-bottom font-15">
+          <span class="color-pink">예상 ★4.7</span>
+          <span>평균 ★4.2 (2만명)</span>
+        </div>
+        <div class="d-flex gap-4">
+          <div class="d-flex flex-column align-items-center">
+            <span class="text-secondary font-12">평가하기</span>
+            <span class="rating_box">
+              <div class="rating">
+                ★★★★★
+                <span class="rating_star">★★★★★</span>
+                <input type="range" value="1" step="1" min="0" max="10" />
+              </div>
+            </span>
+          </div>
+          <div class="vertical-line"></div>
+          <a href="#" class="d-flex align-items-center gap-2 feature-btn">
+            <span class="material-symbols-outlined">add</span>
+            <span class="font-14">보고싶어요</span>
+          </a>
+          <a href="#" class="d-flex align-items-center gap-2 feature-btn">
+            <span class="material-symbols-outlined">edit</span>
+            <span class="font-14">코멘트</span>
+          </a>
+          <a href="#" class="d-flex align-items-center gap-2 feature-btn">
+            <span class="material-symbols-outlined">visibility</span>
+            <span class="font-14">보는중</span>
+          </a>
+          <a href="#" class="d-flex align-items-center gap-2 feature-btn">
+            <span class="material-symbols-outlined">more_horiz</span>
+            <span class="font-14">더보기</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 영화 상세 정보 -->
+  <section class="py-4">
+    <div class="detail-info">
+      <div class="border bg-white p-4">
+        <!-- 내가 좋아할 이유 -->
+        <div class="d-flex flex-column gap-3 mb-4">
+          <h2><b>내가 좋아할 이유</b></h2>
+          <div class="d-flex justify-content-between border-bottom pb-2">
+            <div class="text-secondary font-15">선호하는 배우</div>
+            <div class="font-15">조 샐다나</div>
+          </div>
+          <div class="d-flex justify-content-between border-bottom pb-2">
+            <div class="text-secondary font-15">재밌게 본 비슷한 작품</div>
+            <div class="font-15">블랙팬서: 와칸다 포에버</div>
+          </div>
+          <div class="d-flex justify-content-between border-bottom pb-2">
+            <div class="text-secondary font-15">선호하는 태그</div>
+            <div class="font-15">#마블 #우주선</div>
+          </div>
         </div>
 
-        <div class="d-flex gap-4 basic-info">
-            <div class="detail-poster_wrapper">
-                <img
-                src="https://newsimg.sedaily.com/2023/02/28/29LXDZZ0OU_1.jpg"
-                alt=""
-                />
-            </div>
-            <div class="d-flex flex-column">
-                <div class="mb-4 d-flex gap-2 text-secondary font-13">
-                    <span>예매 순위</span>
-                    <span class="text-white">1위(40%)</span>
-                    <span>개봉</span>
-                    <span class="text-white">8일째</span>
-                    <span>누적 관객</span>
-                    <span class="text-white">183만명</span>
-                </div>
-                <h1><b>가디언즈 오브 갤럭시: Volume 3</b></h1>
-                <div class="mb-2 text-secondary font-15">2023・액션/모험/코미디・미국</div>
-                <div class="mb-3 py-2 d-flex gap-3 border-top border-bottom font-15">
-                    <span class="color-pink">예상 ★4.7</span>
-                    <span>평균 ★4.2 (2만명)</span>
-                </div>
-                <div class="d-flex gap-4">
-                <div class="d-flex flex-column align-items-center">
-                    <span class="text-secondary font-12">평가하기</span>
-                    <span class="rating_box">
-                        <div class="rating">
-                        ★★★★★
-                        <span class="rating_star">★★★★★</span>
-                        <input type="range" value="1" step="1" min="0" max="10">
+        <!-- 기본 정보 -->
+        <div class="mb-4 pb-3 border-bottom">
+          <div class="d-flex justify-content-between mb-2">
+            <h2><b>기본 정보</b></h2>
+            <a href="#" class="color-pink">더보기</a>
+          </div>
+          <div class="text-secondary font-15">
+            Guardians of the Galaxy Vol. 3
+          </div>
+          <div class="text-secondary font-15">2023 · 미국 · 액션</div>
+          <div class="text-secondary font-15">2시간 30분 · 12세</div>
+          <div class="text-secondary font-15">
+            ‘가모라’를 잃고 슬픔에 빠져 있던 ‘피터 퀼’이 위기에 처한 은하계와
+            동료를 지키기 위해 다시 한번 가디언즈 팀과 힘을 모으고, 성공하지
+            못할 경우 그들의 마지막이 될지도 모르는 미션에 나서는 이야기
+          </div>
+        </div>
+
+        <!-- 별점 그래프 -->
+        <div class="mb-4 pb-3 border-bottom">
+          <div class="d-flex justify-content-between mb-3">
+            <h2><b>별점 그래프</b></h2>
+            <div>평균 ★4.2</div>
+          </div>
+          <div>그래프</div>
+        </div>
+
+        <!-- 코멘트 -->
+        <div>
+          <div class="d-flex justify-content-between mb-3">
+            <h2><b>코멘트</b></h2>
+            <a href="{% url 'posts:comments' %}" class="color-pink">더보기</a>
+          </div>
+
+          <!-- 코멘트 carousel -->
+          <div id="carouselExample" class="carousel carousel-dark slide">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <ul class="card-wrapper gap-3">
+                  <li class="comment-card">
+                    <div
+                      class="d-flex justify-content-between align-items-center border-bottom mb-3"
+                    >
+                      <a href="#" class="d-flex align-items-center gap-2 py-2">
+                        <div class="profile-image-form">
+                          <img src="{% static 'img/no_profile.jpg' %}" alt="" />
                         </div>
-                    </span>
-                </div>
-                <div class="vertical-line"></div>
-                <a href="#" class="d-flex align-items-center gap-2 feature-btn">
-                    <span class="material-symbols-outlined">add</span>
-                    <span class="font-14">보고싶어요</span>
-                </a>
-                <a href="#" class="d-flex align-items-center gap-2 feature-btn">
-                    <span class="material-symbols-outlined">edit</span>
-                    <span class="font-14">코멘트</span>
-                </a>
-                <a href="#" class="d-flex align-items-center gap-2 feature-btn">
-                    <span class="material-symbols-outlined">visibility</span>
-                    <span class="font-14">보는중</span>
-                </a>
-                <a href="#" class="d-flex align-items-center gap-2 feature-btn">
-                    <span class="material-symbols-outlined">more_horiz</span>
-                    <span class="font-14">더보기</span>
-                </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 영화 상세 정보 -->
-    <section class="py-4">
-        <div class="detail-info">
-            <div class="border bg-white p-4">
-                <!-- 내가 좋아할 이유 -->
-                <div class="d-flex flex-column gap-3 mb-4">
-                    <h2><b>내가 좋아할 이유</b></h2>
-                    <div class="d-flex justify-content-between border-bottom pb-2">
-                        <div class="text-secondary font-15">선호하는 배우</div>
-                        <div class="font-15">조 샐다나</div>
+                        <div><b>시무리우리형</b></div>
+                      </a>
+                      <div class="comment-score font-14">★4.5</div>
                     </div>
-                    <div class="d-flex justify-content-between border-bottom pb-2">
-                        <div class="text-secondary font-15">재밌게 본 비슷한 작품</div>
-                        <div class="font-15">블랙팬서: 와칸다 포에버</div>
+                    <a href="#">
+                      <div class="comment-content border-bottom">
+                        비로소야 그루트의 말이 무슨뜻인지 들리는 관객들
+                      </div>
+                    </a>
+                    <div
+                      class="d-flex align-items-center gap-3 border-bottom mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2 py-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >thumb_up</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >chat_bubble</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
                     </div>
-                    <div class="d-flex justify-content-between border-bottom pb-2">
-                        <div class="text-secondary font-15">선호하는 태그</div>
-                        <div class="font-15">#마블 #우주선</div>
-                    </div>
-                </div>
-
-                <!-- 기본 정보 -->
-                <div class="mb-4 pb-3 border-bottom">
-                    <div class="d-flex justify-content-between mb-2">
-                        <h2><b>기본 정보</b></h2>
-                        <a href="#" class="color-pink">더보기</a>
-                    </div>
-                    <div class="text-secondary font-15">Guardians of the Galaxy Vol. 3</div>
-                    <div class="text-secondary font-15">2023 · 미국 · 액션</div>
-                    <div class="text-secondary font-15">2시간 30분 · 12세</div>
-                    <div class="text-secondary font-15">
-                        ‘가모라’를 잃고 슬픔에 빠져 있던 ‘피터 퀼’이 위기에 처한
-                        은하계와 동료를 지키기 위해 다시 한번 가디언즈 팀과 힘을 모으고,
-                        성공하지 못할 경우 그들의 마지막이 될지도 모르는 미션에 나서는
-                        이야기
-                    </div>
-                </div>
-
-                <!-- 별점 그래프 -->
-                <div class="mb-4 pb-3 border-bottom">
-                    <div class="d-flex justify-content-between mb-3">
-                        <h2><b>별점 그래프</b></h2>
-                        <div>평균 ★4.2</div>
-                    </div>
-                    <div>그래프</div>
-                </div>
-
-                <!-- 코멘트 -->
-                <div>
-                    <div class="d-flex justify-content-between mb-3">
-                        <h2><b>코멘트</b></h2>
-                        <a href="{% url 'posts:comments' %}" class="color-pink">더보기</a>
-                    </div>
-
-                    <!-- 코멘트 carousel -->
-                    <div id="carouselExample" class="carousel carousel-dark slide">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <ul class="card-wrapper gap-3">
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="carousel-item">
-                                <ul class="card-wrapper gap-3">
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="carousel-item">
-                                <ul class="card-wrapper gap-3">
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                </ul>
-                            </div>
+                    <a href="#" class="color-pink">좋아요</a>
+                  </li>
+                  <li class="comment-card">
+                    <div
+                      class="d-flex justify-content-between align-items-center border-bottom mb-3"
+                    >
+                      <a href="#" class="d-flex align-items-center gap-2 py-2">
+                        <div class="profile-image-form">
+                          <img src="{% static 'img/no_profile.jpg' %}" alt="" />
                         </div>
-                        <button id="prevBtn" class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        </button>
-                        <button id="nextBtn" class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        </button>
+                        <div><b>시무리우리형</b></div>
+                      </a>
+                      <div class="comment-score font-14">★4.5</div>
                     </div>
-                </div>
+                    <a href="#">
+                      <div class="comment-content border-bottom">
+                        비로소야 그루트의 말이 무슨뜻인지 들리는 관객들
+                      </div>
+                    </a>
+                    <div
+                      class="d-flex align-items-center gap-3 border-bottom mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2 py-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >thumb_up</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >chat_bubble</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                    </div>
+                    <a href="#" class="color-pink">좋아요</a>
+                  </li>
+                  <li class="comment-card">
+                    <div
+                      class="d-flex justify-content-between align-items-center border-bottom mb-3"
+                    >
+                      <a href="#" class="d-flex align-items-center gap-2 py-2">
+                        <div class="profile-image-form">
+                          <img src="{% static 'img/no_profile.jpg' %}" alt="" />
+                        </div>
+                        <div><b>시무리우리형</b></div>
+                      </a>
+                      <div class="comment-score font-14">★4.5</div>
+                    </div>
+                    <a href="#">
+                      <div class="comment-content border-bottom">
+                        비로소야 그루트의 말이 무슨뜻인지 들리는 관객들
+                      </div>
+                    </a>
+                    <div
+                      class="d-flex align-items-center gap-3 border-bottom mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2 py-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >thumb_up</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >chat_bubble</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                    </div>
+                    <a href="#" class="color-pink">좋아요</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="carousel-item">
+                <ul class="card-wrapper gap-3">
+                  <li class="comment-card">
+                    <div
+                      class="d-flex justify-content-between align-items-center border-bottom mb-3"
+                    >
+                      <a href="#" class="d-flex align-items-center gap-2 py-2">
+                        <div class="profile-image-form">
+                          <img src="{% static 'img/no_profile.jpg' %}" alt="" />
+                        </div>
+                        <div><b>시무리우리형</b></div>
+                      </a>
+                      <div class="comment-score font-14">★4.5</div>
+                    </div>
+                    <a href="#">
+                      <div class="comment-content border-bottom">
+                        비로소야 그루트의 말이 무슨뜻인지 들리는 관객들
+                      </div>
+                    </a>
+                    <div
+                      class="d-flex align-items-center gap-3 border-bottom mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2 py-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >thumb_up</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >chat_bubble</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                    </div>
+                    <a href="#" class="color-pink">좋아요</a>
+                  </li>
+                  <li class="comment-card">
+                    <div
+                      class="d-flex justify-content-between align-items-center border-bottom mb-3"
+                    >
+                      <a href="#" class="d-flex align-items-center gap-2 py-2">
+                        <div class="profile-image-form">
+                          <img src="{% static 'img/no_profile.jpg' %}" alt="" />
+                        </div>
+                        <div><b>시무리우리형</b></div>
+                      </a>
+                      <div class="comment-score font-14">★4.5</div>
+                    </div>
+                    <a href="#">
+                      <div class="comment-content border-bottom">
+                        비로소야 그루트의 말이 무슨뜻인지 들리는 관객들
+                      </div>
+                    </a>
+                    <div
+                      class="d-flex align-items-center gap-3 border-bottom mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2 py-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >thumb_up</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >chat_bubble</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                    </div>
+                    <a href="#" class="color-pink">좋아요</a>
+                  </li>
+                  <li class="comment-card">
+                    <div
+                      class="d-flex justify-content-between align-items-center border-bottom mb-3"
+                    >
+                      <a href="#" class="d-flex align-items-center gap-2 py-2">
+                        <div class="profile-image-form">
+                          <img src="{% static 'img/no_profile.jpg' %}" alt="" />
+                        </div>
+                        <div><b>시무리우리형</b></div>
+                      </a>
+                      <div class="comment-score font-14">★4.5</div>
+                    </div>
+                    <a href="#">
+                      <div class="comment-content border-bottom">
+                        비로소야 그루트의 말이 무슨뜻인지 들리는 관객들
+                      </div>
+                    </a>
+                    <div
+                      class="d-flex align-items-center gap-3 border-bottom mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2 py-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >thumb_up</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >chat_bubble</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                    </div>
+                    <a href="#" class="color-pink">좋아요</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="carousel-item">
+                <ul class="card-wrapper gap-3">
+                  <li class="comment-card">
+                    <div
+                      class="d-flex justify-content-between align-items-center border-bottom mb-3"
+                    >
+                      <a href="#" class="d-flex align-items-center gap-2 py-2">
+                        <div class="profile-image-form">
+                          <img src="{% static 'img/no_profile.jpg' %}" alt="" />
+                        </div>
+                        <div><b>시무리우리형</b></div>
+                      </a>
+                      <div class="comment-score font-14">★4.5</div>
+                    </div>
+                    <a href="#">
+                      <div class="comment-content border-bottom">
+                        비로소야 그루트의 말이 무슨뜻인지 들리는 관객들
+                      </div>
+                    </a>
+                    <div
+                      class="d-flex align-items-center gap-3 border-bottom mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2 py-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >thumb_up</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >chat_bubble</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                    </div>
+                    <a href="#" class="color-pink">좋아요</a>
+                  </li>
+                  <li class="comment-card">
+                    <div
+                      class="d-flex justify-content-between align-items-center border-bottom mb-3"
+                    >
+                      <a href="#" class="d-flex align-items-center gap-2 py-2">
+                        <div class="profile-image-form">
+                          <img src="{% static 'img/no_profile.jpg' %}" alt="" />
+                        </div>
+                        <div><b>시무리우리형</b></div>
+                      </a>
+                      <div class="comment-score font-14">★4.5</div>
+                    </div>
+                    <a href="#">
+                      <div class="comment-content border-bottom">
+                        비로소야 그루트의 말이 무슨뜻인지 들리는 관객들
+                      </div>
+                    </a>
+                    <div
+                      class="d-flex align-items-center gap-3 border-bottom mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2 py-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >thumb_up</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >chat_bubble</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                    </div>
+                    <a href="#" class="color-pink">좋아요</a>
+                  </li>
+                  <li class="comment-card">
+                    <div
+                      class="d-flex justify-content-between align-items-center border-bottom mb-3"
+                    >
+                      <a href="#" class="d-flex align-items-center gap-2 py-2">
+                        <div class="profile-image-form">
+                          <img src="{% static 'img/no_profile.jpg' %}" alt="" />
+                        </div>
+                        <div><b>시무리우리형</b></div>
+                      </a>
+                      <div class="comment-score font-14">★4.5</div>
+                    </div>
+                    <a href="#">
+                      <div class="comment-content border-bottom">
+                        비로소야 그루트의 말이 무슨뜻인지 들리는 관객들
+                      </div>
+                    </a>
+                    <div
+                      class="d-flex align-items-center gap-3 border-bottom mb-2"
+                    >
+                      <div class="d-flex align-items-center gap-2 py-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >thumb_up</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                      <div class="d-flex align-items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-secondary font-15"
+                          >chat_bubble</span
+                        >
+                        <div class="font-14">123</div>
+                      </div>
+                    </div>
+                    <a href="#" class="color-pink">좋아요</a>
+                  </li>
+                </ul>
+              </div>
             </div>
+            <button
+              id="prevBtn"
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+            </button>
+            <button
+              id="nextBtn"
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+            </button>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </main>
-{% endblock content %}
-
-{% block script %}
+{% endblock content %} {% block script %}
 <script src="{% static 'js/detailRating.js' %}"></script>
 <script src="{% static 'js/detailNavbar.js' %}"></script>
-{% endblock script %}
-
-
-
-{% comment %} {% load bootstrap4 %}
-<!doctype html>
+{% endblock script %} {% comment %} {% load bootstrap4 %}
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>포스팅 자세히</title>
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    {% bootstrap_jquery %}
-</head>
-<body>
-<ul>
-    <li><h1>{{ post.title }}</h1></li>
-    <li><img src="{{ post.image.url }}" alt="" style="width:400px;"></li>
-    <li><b>{{ post.content }}</b></li>
-</ul>
-</body>
-</html> {% endcomment %}
+    {% bootstrap_css %} {% bootstrap_javascript %} {% bootstrap_jquery %}
+  </head>
+  <body>
+    <ul>
+      <li><h1>{{ post.title }}</h1></li>
+      <li><img src="{{ post.image.url }}" alt="" style="width: 400px" /></li>
+      <li><b>{{ post.content }}</b></li>
+    </ul>
+  </body>
+</html>
+{% endcomment %}

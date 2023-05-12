@@ -1,13 +1,7 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block head %}
-<title>코멘트 목록</title>
-<link rel="stylesheet" href="{% static 'css/comments.css' %}">
-{% endblock head %}
-
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block head %}
+<title>영화 검색</title>
+<link rel="stylesheet" href="{% static 'css/search.css' %}" />
+{% endblock head %} {% block content %}
 <div class="search-result">
   <div>"존윅" 의 검색결과</div>
 </div>
@@ -18,7 +12,7 @@
     <div>
       <h2>콘텐츠</h2>
     </div>
-    <hr />
+
     <!-- 캐로젤+카드(index) -->
     <div id="carouselExample" class="carousel carousel-dark slide">
       <div class="carousel-inner">
@@ -265,9 +259,8 @@
   </div>
 </div>
 
-
-
-{% comment %} <form action="" method="get">
+{% comment %}
+<form action="" method="get">
   <input type="text" name="q" value="{{ q }}" />
   <input type="submit" value="검색" />
 </form>
@@ -285,8 +278,5 @@
     </td>
   </tr>
   {% endfor %}
-</table> {% endcomment %}
-{% endblock content %}
-
-
-{% block script %}{% endblock script %}
+</table>
+{% endcomment %} {% endblock content %} {% block script %}{% endblock script %}
