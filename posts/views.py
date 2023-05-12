@@ -30,3 +30,7 @@ def comments(request):
 
 def comment(request):
   return render(request, 'comment.html')
+
+
+def search(request):
+  return render(request, 'search.html')

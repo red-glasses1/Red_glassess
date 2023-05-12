@@ -10,6 +10,7 @@ urlpatterns = [
   path('detail/', views.detail, name='detail'),
   path('comments/', views.comments, name='comments'),
   path('comment/', views.comment, name='comment'),
+  path('search/', views.search, name='search'),
   # path('search/',TemplateView.as_view(template_name='post_search.html'), name='search'),
   # path('/',views.index, name='index'),
 ]
