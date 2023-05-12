@@ -18,4 +18,15 @@ def post_list(request):
   return render(request,'post_search.html',{'qs': qs,'q':q})
 
 # 영화 정보 페이지
-post_detail = DetailView.as_view(model=Post,pk_url_kwarg='pk',template_name='post_detail.html')
+# post_detail = DetailView.as_view(model=Post,pk_url_kwarg='pk',template_name='post_detail.html')
+
+def detail(request):
+  return render(request, 'posts/detail.html')
+
+
+def comments(request):
+  return render(request, 'posts/comments.html')
+
+
+def comment(request):
+  return render(request, 'posts/comment.html')
