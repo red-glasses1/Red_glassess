@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+<title>영화정보</title>
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock head %}
+
+{% block content %}
+<main>
+    <!-- 영화 기본 정보 -->
+    <section class="detail-movie_info border-bottom">
+        <!-- 영화 이미지 배너 -->
+        <div class="detail-banner_wrapper">
+        <div class="filter"></div>
+        {% for image in gallery %}
+        <img src="https://image.tmdb.org/t/p/original/{{ image.file_path }}"/>
+        {% endfor %}
+        </div>
+
+        <div class="d-flex gap-4 basic-info">
+            <div class="detail-poster_wrapper">
+                <img
+                src="https://image.tmdb.org/t/p/w500/{{ detail.poster_path }}"
+                alt=""
+                />
+            </div>
+            <div class="d-flex flex-column">
+                <h1 class="mt-5"><b>{{ detail.title }}</b></h1>
+                <span class="mb-2 text-secondary font-15">{{ detail.release_date }}・
+                    {% for genre in genres %}
+                    {{ genre.name }},
+                    {% endfor %}
+                <div class="mb-3 py-2 d-flex border-top border-bottom font-15">
+                    <span class="color-pink">평균 ★{{ score }}</span>
+                </div>
+                <div class="d-flex gap-4">
+                <div class="d-flex flex-column align-items-center">
+                    <span class="text-secondary font-12">평가하기</span>
+                    <span class="rating_box">
+                        <div class="rating">
+                        ★★★★★
+                        <span class="rating_star">★★★★★</span>
+                        <input type="range" value="1" step="1" min="0" max="10">
+                        </div>
+                    </span>
+                </div>
+                <div class="vertical-line"></div>
+                <a href="#" class="d-flex align-items-center gap-2 feature-btn">
+                    <span class="material-symbols-outlined">add</span>
+                    <span class="font-14">보고싶어요</span>
+                </a>
+                <a type="button" data-bs-toggle="modal" data-bs-target="#commentModal" class="d-flex align-items-center gap-2 feature-btn">
+                    <span class="material-symbols-outlined">edit</span>
+                    <span class="font-14">코멘트</span>
+                </a>
+                <a href="#" class="d-flex align-items-center gap-2 feature-btn">
+                    <span class="material-symbols-outlined">visibility</span>
+                    <span class="font-14">보는중</span>
+                </a>
+                <a href="#" class="d-flex align-items-center gap-2 feature-btn">
+                    <span class="material-symbols-outlined">more_horiz</span>
+                    <span class="font-14">더보기</span>
+                </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 영화 상세 정보 -->
+    <section class="py-4">
+        <div class="detail-info">
+            <div class="border bg-white p-4">
+                <!-- 내가 좋아할 이유 -->
+                {% comment %} <div class="d-flex flex-column gap-3 mb-4">
+                    <h2><b>내가 좋아할 이유</b></h2>
+                    <div class="d-flex justify-content-between border-bottom pb-2">
+                        <div class="text-secondary font-15">선호하는 배우</div>
+                        <div class="font-15">조 샐다나</div>
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom pb-2">
+                        <div class="text-secondary font-15">재밌게 본 비슷한 작품</div>
+                        <div class="font-15">블랙팬서: 와칸다 포에버</div>
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom pb-2">
+                        <div class="text-secondary font-15">선호하는 태그</div>
+                        <div class="font-15">#마블 #우주선</div>
+                    </div>
+                </div> {% endcomment %}
+
+                <!-- 기본 정보 -->
+                <div class="mb-4 pb-3 border-bottom">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h2><b>기본 정보</b></h2>
+                    </div>
+                    <div class="text-secondary font-15">{{ detail.original_title }}</div>
+                    <div class="text-secondary font-15">{{ detail.release_date }} · 
+                        {% for genre in genres %}
+                        {{ genre.name }},
+                        {% endfor %}
+                    </div>
+                    <div class="text-secondary font-15">{{ detail.runtime }}분</div>
+                    <div class="text-secondary font-15">{{ detail.overview }}</div>
+                </div>
+
+                <!-- 별점 그래프 -->
+                <div class="mb-4 pb-3 border-bottom">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h2><b>별점 그래프</b></h2>
+                        <div>평균 ★{{ score }}</div>
+                    </div>
+                    <div>그래프</div>
+                </div>
+
+                <!-- 코멘트 -->
+                <div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h2><b>코멘트</b></h2>
+                        {% comment %} <a href="{% url 'posts:comments' %}" class="color-pink">더보기</a> {% endcomment %}
+                    </div>
+
+                    <!-- 코멘트 carousel -->
+                    <div id="carouselExample" class="carousel carousel-dark slide">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <ul class="card-wrapper gap-3">
+                                    {% for comment in comments %}
+                                    <li class="comment-card">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
+                                                <div class="profile-image-form">
+                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                                                </div>
+                                                <div><b>시무리우리형</b></div>
+                                            </a>
+                                            <div class="comment-score font-14">★4.5</div>
+                                        </div>
+                                        <a href="#">
+                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
+                                        </a>
+                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
+                                            <div class="d-flex align-items-center gap-2 py-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                        </div>
+                                        <a href="#" class="color-pink">좋아요</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="carousel-item">
+                                <ul class="card-wrapper gap-3">
+                                    <li class="comment-card">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
+                                                <div class="profile-image-form">
+                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                                                </div>
+                                                <div><b>시무리우리형</b></div>
+                                            </a>
+                                            <div class="comment-score font-14">★4.5</div>
+                                        </div>
+                                        <a href="#">
+                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
+                                        </a>
+                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
+                                            <div class="d-flex align-items-center gap-2 py-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                        </div>
+                                        <a href="#" class="color-pink">좋아요</a>
+                                    </li>
+                                    <li class="comment-card">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
+                                                <div class="profile-image-form">
+                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                                                </div>
+                                                <div><b>시무리우리형</b></div>
+                                            </a>
+                                            <div class="comment-score font-14">★4.5</div>
+                                        </div>
+                                        <a href="#">
+                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
+                                        </a>
+                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
+                                            <div class="d-flex align-items-center gap-2 py-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                        </div>
+                                        <a href="#" class="color-pink">좋아요</a>
+                                    </li>
+                                    <li class="comment-card">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
+                                                <div class="profile-image-form">
+                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                                                </div>
+                                                <div><b>시무리우리형</b></div>
+                                            </a>
+                                            <div class="comment-score font-14">★4.5</div>
+                                        </div>
+                                        <a href="#">
+                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
+                                        </a>
+                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
+                                            <div class="d-flex align-items-center gap-2 py-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                        </div>
+                                        <a href="#" class="color-pink">좋아요</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="carousel-item">
+                                <ul class="card-wrapper gap-3">
+                                    {% for comment in comments %}
+                                    <li class="comment-card">
+                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
+                                                <div class="profile-image-form">
+                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                                                </div>
+                                                <div><b>시무리우리형</b></div>
+                                            </a>
+                                            <div class="comment-score font-14">★4.5</div>
+                                        </div>
+                                        <a href="#">
+                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
+                                        </a>
+                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
+                                            <div class="d-flex align-items-center gap-2 py-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
+                                                <div class="font-14">123</div>
+                                            </div>
+                                        </div>
+                                        <a href="#" class="color-pink">좋아요</a>
+                                    </li>
+                                    {% endfor %}
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <button id="prevBtn" class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </button>
+                        <button id="nextBtn" class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<!-- 코멘트 작성 Modal -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content w-100 p-3">
+            <!-- 코멘트 타이틀 -->
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h6 class="m-0"><b>{{ detail.title }}</b></h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- 코멘트 입력부분 -->
+            <form action="{% url 'posts:comment_create' detail.id %}" method="POST" class="d-flex flex-column log-input w-100 gap-2">
+                {% csrf_token %}
+                <textarea name="" id="" cols="30" rows="10" class="border-0 chat-input" placeholder="이 영화에 대한 생각을 자유롭게 표현해주세요."></textarea>
+                <div class="d-flex flex-column align-items-end">
+                    <input type="submit" value="저장" class="chat-btn border-0 mt-3">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/detailRating.js' %}"></script>
+<script src="{% static 'js/detailNavbar.js' %}"></script>
+{% endblock script %}

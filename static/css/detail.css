@@ -200,3 +200,12 @@ li {
     width: 18px;
     height: 18px;
 }
+
+.chat-btn {
+    width: 100px;
+    height: 40px;
+    background-color: rgb(255, 47, 110) !important;
+    color: white;
+    opacity: 0.5;
+    border-radius: 7px;
+}
