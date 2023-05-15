@@ -5,12 +5,23 @@ from .import views
 
 app_name = 'posts'
 urlpatterns = [
-  path('', views.post_list, name='index'),
-  # path('<int:pk>/', views.post_detail, name='detail'),
-  path('detail/', views.detail, name='detail'),
-  path('comments/', views.comments, name='comments'),
-  path('comment/', views.comment, name='comment'),
+  # 영화 디테일 페이지관련
+  path('<int:detail_pk>/', views.detail, name='detail'),
+
+  # 코멘트 모음 페이지
+  path('<int:detail_pk>/comments/', views.comments, name='comments'),
+
+  # 코멘트 페이지 관련
+  path('<int:detail_pk>/comments/<int:comment_pk>/', views.comment, name='comment'),
+  path('<int:detail_pk>/comment/', views.comment_create, name='comment_create'),
+  path('<int:detail_pk>/comments/<int:comment_pk>/update/', views.comment_update, name='comment_update'),
+  # path('<int:detail_pk>/comments/<int:comment_pk>/delete/', views.comment_delete, name='comment_delete'),
+
+  # 코멘트 댓글 관련
+  # path('<int:detail_pk>/comments/<int:comment_pk>/recomments/', views.recomment_create, name='recomment_create'),
+  # path('<int:detail_pk>/comments/<int:comment_pk>/recomments/<int:recomment_pk>/delete/', views.recomment_delete, name='recomment_delete'),
+  # path('<int:detail_pk>/comments/<int:comment_pk>/recomments/<int:recomment_pk>/update/', views.recomment_update, name='recomment_update'),
+
+  # 검색 페이지 관련
   path('search/', views.search, name='search'),
-  # path('search/',TemplateView.as_view(template_name='post_search.html'), name='search'),
-  # path('/',views.index, name='index'),
 ]

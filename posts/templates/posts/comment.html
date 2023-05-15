@@ -1,232 +1,157 @@
-{% extends 'base.html' %} {% load static %} {% block head %}
-<title>코멘트</title>
-<link rel="stylesheet" href="{% static 'css/comment.css' %}" />
-{% endblock head %} {% block content %}
-<main>
-  <div class="container mb-5">
-    <!-- 영화정보 부분 -->
-    <section>
-      <div class="d-flex justify-content-between py-3">
-        <div class="d-flex flex-column gap-1">
-          <div class="d-flex align-items-center gap-2">
-            <div class="profile-image-form">
-              <img src="{% static 'img/no_profile.jpg' %}" alt="" />
-            </div>
-            <div class="font-12 text-secondary">이동진 평론가</div>
-            <div class="font-12 text-secondary">4일전</div>
-          </div>
-          <h1 class="mt-2 m-0 fs-6">영화 제목</h1>
-          <div class="font-12 text-secondary">영화 개봉년도</div>
-          <div class="comment-score font-13">★4.5</div>
-          <div class="font-15 comment-content">
-            픽사의 뛰어난 작품들에서나 발견할 수 있을 것 같은 애절한 순정을
-            마블에서 만나게 되다니.
-          </div>
-          <div class="d-flex gap-3">
-            <div class="font-12 text-secondary">좋아요 123</div>
-            <div class="font-12 text-secondary">댓글 123</div>
-          </div>
-        </div>
-        <div>
-          <div class="comment-poster_wrapper">
-            <img
-              src="https://newsimg.sedaily.com/2023/02/28/29LXDZZ0OU_1.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="d-flex align-items-center justify-content-evenly gap-1 p-2 border-bottom border-top feature-btn"
-      >
-        <a
-          href="#"
-          class="d-flex align-items-center justify-content-center gap-2 font-15 text-secondary"
-        >
-          <span class="material-icons-outlined font-15">thumb_up</span>
-          좋아요
-        </a>
-        <div class="vertical-line"></div>
-        <a
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#chatModal"
-          class="d-flex align-items-center justify-content-center gap-2 font-15 text-secondary"
-        >
-          <span class="material-icons-outlined font-15">chat</span>
-          댓글
-        </a>
-        <div class="vertical-line"></div>
-        <div class="dropdown-center w-100">
-          <a
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            class="d-flex align-items-center justify-content-center gap-2 font-15 text-secondary"
-          >
-            <span class="material-icons-outlined font-15">share</span>
-            공유
-          </a>
-          <ul class="dropdown-menu border-0 shadow mt-2">
-            <li>
-              <button class="dropdown-item" type="button" class="d-flex gap-2">
-                <img
-                  src="{% static 'img/twitter_logo.svg' %}"
-                  alt=""
-                  style="width: 19px; height: 15px"
-                  class="me-2"
-                />
-                트위터
-              </button>
-            </li>
-            <li>
-              <button class="dropdown-item" type="button" class="d-flex gap-2">
-                <img
-                  src="{% static 'img/facebook_logo.svg' %}"
-                  alt=""
-                  style="width: 19px; height: 19px"
-                  class="me-2"
-                />
-                페이스북
-              </button>
-            </li>
-            <li>
-              <button class="dropdown-item" type="button" class="d-flex gap-2">
-                <img
-                  src="{% static 'img/kakao_logo.svg' %}"
-                  alt=""
-                  style="width: 18px; height: 16px"
-                  class="me-2"
-                />
-                카카오톡
-              </button>
-            </li>
-            <li>
-              <button class="dropdown-item" type="button" class="d-flex gap-2">
-                <img
-                  src="https://seekicon.com/free-icon-download/link_7.svg"
-                  alt=""
-                  style="width: 18px; height: 16px"
-                  class="me-2"
-                />
-                링크복사
-              </button>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
+{% extends 'base.html' %}
+{% load static %}
 
-    <!-- 댓글부분 -->
-    <section>
-      <li class="d-flex gap-2 py-3 border-bottom">
-        <div>
-          <div class="chat-profile_form">
-            <img src="{% static 'img/no_profile.jpg' %}" alt="" />
-          </div>
-        </div>
-        <div class="w-100">
-          <div class="d-flex justify-content-between">
-            <div class="font-14"><b>작성자</b></div>
-            <div class="text-secondary font-13">3일전</div>
-          </div>
-          <div class="font-15">재미있어요!!</div>
-          <a
-            href="#"
-            class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn"
-          >
-            <span class="material-icons-outlined font-14 text-secondary"
-              >thumb_up</span
-            >
-            <div class="font-14 text-secondary">123</div>
-          </a>
-        </div>
-      </li>
-      <li class="d-flex gap-2 py-3 border-bottom">
-        <div>
-          <div class="chat-profile_form">
-            <img src="{% static 'img/no_profile.jpg' %}" alt="" />
-          </div>
-        </div>
-        <div class="w-100">
-          <div class="d-flex justify-content-between">
-            <div class="font-14"><b>작성자</b></div>
-            <div class="text-secondary font-13">3일전</div>
-          </div>
-          <div class="font-15">재미있어요!!</div>
-          <a
-            href="#"
-            class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn"
-          >
-            <span class="material-icons-outlined font-14 text-secondary"
-              >thumb_up</span
-            >
-            <div class="font-14 text-secondary">123</div>
-          </a>
-        </div>
-      </li>
-      <li class="d-flex gap-2 py-3 border-bottom">
-        <div>
-          <div class="chat-profile_form">
-            <img src="{% static 'img/no_profile.jpg' %}" alt="" />
-          </div>
-        </div>
-        <div class="w-100">
-          <div class="d-flex justify-content-between">
-            <div class="font-14"><b>작성자</b></div>
-            <div class="text-secondary font-13">3일전</div>
-          </div>
-          <div class="font-15">재미있어요!!</div>
-          <a
-            href="#"
-            class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn"
-          >
-            <span class="material-icons-outlined font-14 text-secondary"
-              >thumb_up</span
-            >
-            <div class="font-14 text-secondary">123</div>
-          </a>
-        </div>
-      </li>
-    </section>
-  </div>
+{% block head %}
+<title>코멘트</title>
+<link rel="stylesheet" href="{% static 'css/comment.css' %}">
+{% endblock head %}
+
+{% block content %}
+<main>
+    <div class="container mb-5">
+        <!-- 영화정보 부분 -->
+        <section>
+            <div class="d-flex justify-content-between py-3">
+                <div class="d-flex flex-column gap-1">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="profile-image-form">
+                            <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                        </div>
+                        <div class="font-12 text-secondary">이동진 평론가</div>
+                        <div class="font-12 text-secondary">4일전</div>
+                    </div>
+                    <h1 class="mt-2 m-0 fs-6">영화 제목</h1>
+                    <div class="font-12 text-secondary">영화 개봉년도</div>
+                    <div class="comment-score font-13">★4.5</div>
+                    <div class="font-15 comment-content">픽사의 뛰어난 작품들에서나 발견할 수 있을 것 같은 애절한 순정을 마블에서 만나게 되다니.</div>
+                    <div class="d-flex gap-3">
+                        <div class="font-12 text-secondary">좋아요 123</div>
+                        <div class="font-12 text-secondary">댓글 123</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="comment-poster_wrapper">
+                        <img
+                        src="https://newsimg.sedaily.com/2023/02/28/29LXDZZ0OU_1.jpg"
+                        alt=""
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-evenly gap-1 p-2 border-bottom border-top feature-btn">
+                <a href="#" class="d-flex align-items-center justify-content-center  gap-2 font-15 text-secondary">
+                    <span class="material-icons-outlined font-15">thumb_up</span>
+                    좋아요
+                </a>
+                <div class="vertical-line"></div>
+                <a type="button" data-bs-toggle="modal" data-bs-target="#chatModal" class="d-flex align-items-center justify-content-center gap-2 font-15 text-secondary">
+                    <span class="material-icons-outlined font-15">chat</span>
+                    댓글
+                </a>
+                <div class="vertical-line"></div>
+                <div class="dropdown-center w-100">
+                    <a type="button" data-bs-toggle="dropdown"  aria-expanded="false" class="d-flex align-items-center justify-content-center  gap-2 font-15 text-secondary">
+                        <span class="material-icons-outlined font-15">share</span>
+                        공유
+                    </a>
+                    <ul class="dropdown-menu border-0 shadow mt-2">
+                        <li><button class="dropdown-item" type="button" class="d-flex gap-2">
+                            <img src="{% static 'img/twitter_logo.svg' %}" alt="" style="width: 19px; height: 15px;" class="me-2">
+                            트위터</button></li>
+                        <li><button class="dropdown-item" type="button" class="d-flex gap-2">
+                            <img src="{% static 'img/facebook_logo.svg' %}" alt="" style="width: 19px; height: 19px;" class="me-2">
+                            페이스북</button></li>
+                        <li><button class="dropdown-item" type="button" class="d-flex gap-2">
+                            <img src="{% static 'img/kakao_logo.svg' %}" alt="" style="width: 18px; height: 16px;" class="me-2">
+                            카카오톡</button></li>
+                        <li><button class="dropdown-item" type="button" class="d-flex gap-2">
+                            <img src="https://seekicon.com/free-icon-download/link_7.svg" alt="" style="width: 18px; height: 16px;" class="me-2">
+                            링크복사</button></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 댓글부분 -->
+        <section>
+            <li class="d-flex gap-2 py-3 border-bottom">
+                <div>
+                    <div class="chat-profile_form">
+                        <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                    </div>
+                </div>
+                <div class="w-100">
+                    <div class="d-flex justify-content-between">
+                        <div class="font-14"><b>작성자</b></div>
+                        <div class="text-secondary font-13">3일전</div>
+                    </div>
+                    <div class="font-15">재미있어요!!</div>
+                    <a href="#" class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn">
+                        <span class="material-icons-outlined font-14 text-secondary">thumb_up</span>
+                        <div class="font-14 text-secondary">123</div>
+                    </a>
+                </div>
+            </li>
+            <li class="d-flex gap-2 py-3 border-bottom">
+                <div>
+                    <div class="chat-profile_form">
+                        <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                    </div>
+                </div>
+                <div class="w-100">
+                    <div class="d-flex justify-content-between">
+                        <div class="font-14"><b>작성자</b></div>
+                        <div class="text-secondary font-13">3일전</div>
+                    </div>
+                    <div class="font-15">재미있어요!!</div>
+                    <a href="#" class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn">
+                        <span class="material-icons-outlined font-14 text-secondary">thumb_up</span>
+                        <div class="font-14 text-secondary">123</div>
+                    </a>
+                </div>
+            </li>
+            <li class="d-flex gap-2 py-3 border-bottom">
+                <div>
+                    <div class="chat-profile_form">
+                        <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                    </div>
+                </div>
+                <div class="w-100">
+                    <div class="d-flex justify-content-between">
+                        <div class="font-14"><b>작성자</b></div>
+                        <div class="text-secondary font-13">3일전</div>
+                    </div>
+                    <div class="font-15">재미있어요!!</div>
+                    <a href="#" class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn">
+                        <span class="material-icons-outlined font-14 text-secondary">thumb_up</span>
+                        <div class="font-14 text-secondary">123</div>
+                    </a>
+                </div>
+            </li>
+        </section>
+    </div>
 </main>
 
+
 <!-- 댓글 Modal -->
-<div
-  class="modal fade"
-  id="chatModal"
-  tabindex="-1"
-  aria-labelledby="chatModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content w-100 p-3">
-      <!-- 댓글 타이틀 -->
-      <div class="d-flex align-items-center justify-content-between mb-3">
-        <h6 class="m-0"><b>댓글</b></h6>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <!-- 댓글 입력부분 -->
-      <div class="d-flex flex-column log-input w-100 gap-2">
-        <textarea
-          name=""
-          id=""
-          cols="30"
-          rows="10"
-          class="border-0 chat-input"
-          placeholder="이 영화에 대한 생각을 자유롭게 표현해주세요."
-        ></textarea>
-        <div class="d-flex flex-column align-items-end">
-          <input type="submit" value="저장" class="chat-btn border-0 mt-3" />
+<div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content w-100 p-3">
+            <!-- 댓글 타이틀 -->
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h6 class="m-0"><b>댓글</b></h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- 댓글 입력부분 -->
+            <div class="d-flex flex-column log-input w-100 gap-2">
+                <textarea name="" id="" cols="30" rows="10" class="border-0 chat-input" placeholder="이 영화에 대한 생각을 자유롭게 표현해주세요."></textarea>
+                <div class="d-flex flex-column align-items-end">
+                    <input type="submit" value="저장" class="chat-btn border-0 mt-3">
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-{% endblock content %} {% block script %}{% endblock script %}
+{% endblock content %}
+
+{% block script %}{% endblock script %}
