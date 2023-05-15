@@ -121,6 +121,7 @@
                     </div>
 
                     <!-- 코멘트 carousel -->
+                    {% if comments %}
                     <div id="carouselExample" class="carousel carousel-dark slide">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -154,117 +155,6 @@
                                     {% endfor %}
                                 </ul>
                             </div>
-                            <div class="carousel-item">
-                                <ul class="card-wrapper gap-3">
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="carousel-item">
-                                <ul class="card-wrapper gap-3">
-                                    {% for comment in comments %}
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
-                                            </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    {% endfor %}
-                                    
-                                </ul>
-                            </div>
                         </div>
                         <button id="prevBtn" class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -273,6 +163,9 @@
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         </button>
                     </div>
+                    {% else %}
+                    <div class="d-flex justify-content-center font-gray">코멘트가 없어요.</div>
+                    {% endif %}
                 </div>
             </div>
         </div>
