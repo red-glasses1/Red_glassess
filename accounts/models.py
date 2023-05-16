@@ -8,7 +8,6 @@ from django.conf import settings
 class Profile(AbstractUser):
   nickname = models.CharField(max_length=10)
   photo = models.ImageField(blank=True, upload_to='profile/')
-  followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
   # def get_absolute_url(self):
   #   return reverse('posts:index')
 
