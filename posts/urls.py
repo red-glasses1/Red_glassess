@@ -24,4 +24,5 @@ urlpatterns = [
 
   # 검색 페이지 관련
   path('search/', views.search, name='search'),
+
 ]

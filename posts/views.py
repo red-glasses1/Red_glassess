@@ -4,12 +4,32 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from posts.models import Post, Comment
-from .forms import CommentForm, RecommentForm
+from .forms import CommentForm, RecommentForm, PostForm
 import requests
 
 
 # Create your views here.
-
+# 포스트 생성
+@login_required
+def post_new(request):
+  if request.method == 'POST':
+    form = PostForm(request.POST,request.FILES)
+    if form.is_valid():
+      post = form.save(commit=False)
+      post.author = request.user
+      post.save()
+      # 모델에 작성할 수도 있음
+      # for tag_name in post.extract_tag_list():
+      #   tag, _ = Tag.objects.get_or_create(name='tag_name')
+      post.tag_set.add(*post.extract_tag_list())
+      messages.info(request, '포스팅을 저장했습니다.')
+      return redirect('/')
+  else:
+    # get 요청일때
+    form = PostForm()
+  return render(request, 'post_form.html',{
+    'form':form
+  })
 # 메인 페이지 (포스팅된 리스트 나열), 검색기능 구현 - FBV
 def post_list(request):
   qs = Post.objects.all()
