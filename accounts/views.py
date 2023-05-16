@@ -101,17 +101,17 @@ def signup(request):
     return render(request, 'index.html', context)
 
 @login_required
-def user_follow(request,username):
-  follow_user = get_object_or_404(get_user_model(),username=username,is_active=True)
+def user_follow(request,nickname):
+  follow_user = get_object_or_404(get_user_model(),nickname=nickname,is_active=True)
   request.user.following_set.add(follow_user)
   follow_user.follower_set.add(request.user)
-  redirect_url = request.META.get("HTTP_REFERER",'root')
+  redirect_url = request.META.get("HTTP_REFERER",'index')
   return redirect(redirect_url)
 
 @login_required
 def user_unfollow(request,username):
-  follow_user = get_object_or_404(get_user_model(),username=username,is_active=True)
+  follow_user = get_object_or_404(get_user_model(),nickname=nickname,is_active=True)
   request.user.following_set.remove(follow_user)
   follow_user.follower_set.remove(request.user)
-  redirect_url = request.META.get("HTTP_REFERER",'root')
+  redirect_url = request.META.get("HTTP_REFERER",'index')
   return redirect(redirect_url)
