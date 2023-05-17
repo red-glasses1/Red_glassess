@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'admin_honeypot',
 
     #allauth(소셜로그인)
     'allauth',
@@ -200,3 +201,9 @@ LOGIN_URL = "/"
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# 보안 설정 -> SSL/TLS 인증서 획득 후 HTTPS 설정 후
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+
+# ADMIN_HONEYPOT_URL = 'fake_admin/'
