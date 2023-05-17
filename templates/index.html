@@ -9,6 +9,9 @@
 <main>
     <div class="container mb-5">
         <section class="index-category">
+        {% if error %}
+            <div class="d-flex justify-content-center fs-5">{{ error }}</div>
+        {% else %}
             <div class="index-category_title">
                 <b>인기영화 순위</b>
             </div>
@@ -141,6 +144,7 @@
                 </button>
             </div>
         </section>
+        {% endif %}
     </div>
 </main>
 {% endblock content %}

@@ -63,7 +63,7 @@ def detail(request, detail_pk):
   credits_url = f"https://api.themoviedb.org/3/movie/{detail_pk}/credits"
 
   credits_response = requests.get(credits_url, params=params)
-  credits = credits_response.json()['cast'][:18]
+  credits = credits_response.json()['cast'][:10]
 
   comments = Comment.objects.filter(movie=detail_pk).order_by('-created_at')[:9]
 
@@ -173,4 +173,35 @@ def recomment_create(request, detail_pk, comment_pk):
 
 
 def search(request):
-  return render(request, 'posts/search.html')
+  if 'q' in request.GET:
+    query = request.GET.get('q')
+
+    # 영화검색
+    search_movies_url = "https://api.themoviedb.org/3/search/movie"
+
+    params = {
+      "api_key": "6cd101ecd178ac88ad307ea8fccdf574",
+      "language": "ko-KR",
+      "query": query,
+      "page": "1",
+      "region": "KR"
+      }
+
+    search_movies_response = requests.get(search_movies_url, params=params)
+    search_movies_info = search_movies_response.json()
+    search_movies = search_movies_info['results']
+
+    # 인물검색
+    search_person_url = "https://api.themoviedb.org/3/search/person"
+
+    search_person_response = requests.get(search_person_url, params=params)
+    search_person_info = search_person_response.json()
+    search_person = search_person_info['results']
+
+  context = {
+    "query": query,
+    "search_movies": search_movies,
+    "search_person": search_person,
+  }
+
+  return render(request, 'posts/search.html', context)

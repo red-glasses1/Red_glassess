@@ -70,7 +70,7 @@ def login(request):
             auth_login(request, user)
             return redirect(next)
         else:
-            return render(request, 'index.html', {'error': 'username or password is incorrect'})
+            return render(request, 'index.html', {'error': '아이디 또는 비밀번호가 올바르지 않습니다.'})
     else:
         return render(request, 'index.html', {'next': next})
 
@@ -96,7 +96,7 @@ def signup(request):
             auth_login(request, user)
             return redirect(next)
         else:
-            return render(request, 'index.html', {'error': 'username or password is incorrect'})
+            return render(request, 'index.html', {'error': '아이디 또는 비밀번호가 올바르지 않습니다.'})
     else:
         form = CustomUserCreationForm()
     context = {
