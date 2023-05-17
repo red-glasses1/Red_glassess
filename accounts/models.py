@@ -8,6 +8,8 @@ from django.conf import settings
 class Profile(AbstractUser):
   nickname = models.CharField(max_length=10)
   photo = models.ImageField(blank=True, upload_to='profile/')
-  followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
   # def get_absolute_url(self):
   #   return reverse('posts:index')
+
+  # 단방향으로 관계를 설정.
+  follower_set = models.ManyToManyField('self', blank=True, related_name='following_set', symmetrical=False)

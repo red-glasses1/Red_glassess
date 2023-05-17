@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CustomUserCreationForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, TemplateView
 from pyexpat.errors import messages
@@ -103,3 +103,19 @@ def signup(request):
         'form': form,
     }
     return render(request, 'index.html', context)
+
+@login_required
+def user_follow(request,nickname):
+  follow_user = get_object_or_404(get_user_model(),nickname=nickname,is_active=True)
+  request.follow_user.follower_set.add(follow_user)
+  follow_user.follower_set.add(request.user)
+  redirect_url = request.META.get("HTTP_REFERER",'index')
+  return redirect(redirect_url,nickname=nickname)
+
+@login_required
+def user_unfollow(request,nickname):
+  follow_user = get_object_or_404(get_user_model(),nickname=nickname,is_active=True)
+  request.follow_user.remove(follow_user)
+  follow_user.follower_set.remove(request.user)
+  redirect_url = request.META.get("HTTP_REFERER",'index')
+  return redirect(redirect_url,nickname=nickname)
