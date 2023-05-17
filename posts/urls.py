@@ -18,7 +18,7 @@ urlpatterns = [
   # path('<int:detail_pk>/comments/<int:comment_pk>/delete/', views.comment_delete, name='comment_delete'),
 
   # 코멘트 댓글 관련
-  # path('<int:detail_pk>/comments/<int:comment_pk>/recomments/', views.recomment_create, name='recomment_create'),
+  path('<int:detail_pk>/comments/<int:comment_pk>/recomments/', views.recomment_create, name='recomment_create'),
   # path('<int:detail_pk>/comments/<int:comment_pk>/recomments/<int:recomment_pk>/delete/', views.recomment_delete, name='recomment_delete'),
   # path('<int:detail_pk>/comments/<int:comment_pk>/recomments/<int:recomment_pk>/update/', views.recomment_update, name='recomment_update'),
 

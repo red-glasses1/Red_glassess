@@ -32,23 +32,52 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'accounts.Profile'
-
 # Application definition
 
 INSTALLED_APPS = [
-    # 'sslserver',
-    'django_extensions',
-    'bootstrap4',
     'posts',
     'accounts',
+    'django_extensions',
+    'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #allauth(소셜로그인)
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    #provider(소셜로그인 api 제공자)
+    'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.naver',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'naver': {
+        'APP': {
+            'client_id': 'UF8Um2i96zQ1Ub7isfjO',
+            'secret': 'is1QvEfkMH',
+        }
+    },
+    'google': {
+        "APP": {
+            "client_id": "194534506939-s1ee0fvde4nugc57nkmjt8rk9akp8cdm.apps.googleusercontent.com",
+            "secret": "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",
+        }
+    },
+    'kakao': {
+        "APP": {
+            "client_id": "e22737f031376a8c10d31387599a31ab", #REST API 키
+            "secret": "osJUnkUA0J65F6VoVN52A6CI8reUTp8R", #내 애플리케이션 -> 보안
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,9 +172,20 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = reverse_lazy('posts:index') # 로그인 성공시 이동할 페이지 # 오류 있음
-LOGOUT_REDIRECT_URL = reverse_lazy('accounts:login') # 로그아웃 성공시 이동할 페이지
+AUTH_USER_MODEL = 'accounts.Profile'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+SOCIALACCOUNT_LOGIN_ON_GET = True
+ACCOUNT_LOGOUT_ON_GET = True
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+LOGIN_URL = "/"
 # class Command(StaticFilesRunserverCommand, SSLServerCommand):
 #     pass
 

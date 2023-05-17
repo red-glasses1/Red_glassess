@@ -21,10 +21,7 @@
 
         <div class="d-flex gap-4 basic-info">
             <div class="detail-poster_wrapper">
-                <img
-                src="https://image.tmdb.org/t/p/w500/{{ detail.poster_path }}"
-                alt=""
-                />
+                <img src="https://image.tmdb.org/t/p/w500/{{ detail.poster_path }}" alt=""/>
             </div>
             <div class="d-flex flex-column">
                 <h1 class="mt-5"><b>{{ detail.title }}</b></h1>
@@ -104,6 +101,29 @@
                     <div class="text-secondary font-15">{{ detail.overview }}</div>
                 </div>
 
+                <!-- 출연진 -->
+                <div class="mb-4 pb-3 border-bottom">
+                    <div class="d-flex justify-content-between mb-2">
+                        <h2><b>출연</b></h2>
+                    </div>
+                    {% for credit in credits %}
+                    <div class="d-flex align-items-center gap-2 border-bottom pb-2 mb-2">
+                        <div class="credit-image_form">
+                            {% if credit.profile_path %}
+                            <img src="https://image.tmdb.org/t/p/w500/{{ credit.profile_path }}" alt="">
+                            {% else %}
+                            <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div>
+                            <div class="font-17">{{ credit.name }}</div>
+                            <div class="text-secondary font-14">{{ credit.character }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+
                 <!-- 별점 그래프 -->
                 <div class="mb-4 pb-3 border-bottom">
                     <div class="d-flex justify-content-between mb-3">
@@ -116,45 +136,51 @@
                 <!-- 코멘트 -->
                 <div>
                     <div class="d-flex justify-content-between mb-3">
-                        <h2><b>코멘트</b></h2>
-                        {% comment %} <a href="{% url 'posts:comments' %}" class="color-pink">더보기</a> {% endcomment %}
+                        <h2 class="d-flex gap-2"><b>코멘트</b><span class="text-secondary">{{ comments|length }}</span></h2>
+                        <a href="{% url 'posts:comments' detail.id %}" class="color-pink">더보기</a>
                     </div>
 
                     <!-- 코멘트 carousel -->
                     {% if comments %}
                     <div id="carouselExample" class="carousel carousel-dark slide">
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <ul class="card-wrapper gap-3">
-                                    {% for comment in comments %}
-                                    <li class="comment-card">
-                                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                                            <a href="#" class="d-flex align-items-center gap-2 py-2">
-                                                <div class="profile-image-form">
-                                                    <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                                                </div>
-                                                <div><b>시무리우리형</b></div>
+                            {% for comment in comments %}
+                                {% if forloop.counter0|divisibleby:3 %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    <div class="row">
+                                        <ul class="card-wrapper gap-3">
+                                {% endif %}
+                                        <li class="comment-card">
+                                            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+                                                <a href="{% url 'accounts:profile' comment.user.username %}" class="d-flex align-items-center gap-2 py-2">
+                                                    <div class="profile-image-form">
+                                                        <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                                                    </div>
+                                                    <div><b>{{ comment.user }}</b></div>
+                                                </a>
+                                                <div class="comment-score font-14">★4.5</div>
+                                            </div>
+                                            <a href="{% url 'posts:comment' comment.movie comment.id %}">
+                                                <div class="comment-content border-bottom">{{ comment.content }}</div>
                                             </a>
-                                            <div class="comment-score font-14">★4.5</div>
-                                        </div>
-                                        <a href="#">
-                                            <div class="comment-content border-bottom">비로소야 그루트의 말이 무슨뜻인지 들리는 관객들</div>
-                                        </a>
-                                        <div class="d-flex align-items-center gap-3 border-bottom mb-2">
-                                            <div class="d-flex align-items-center gap-2 py-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                <div class="font-14">123</div>
+                                            <div class="d-flex align-items-center gap-3 border-bottom mb-2">
+                                                <div class="d-flex align-items-center gap-2 py-2">
+                                                    <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
+                                                    <div class="font-14">{{ comment.count_likes_user }}</div>
+                                                </div>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
+                                                    <div class="font-14">{{ comment.recomment_set.all|length }}</div>
+                                                </div>
                                             </div>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
-                                                <div class="font-14">123</div>
-                                            </div>
-                                        </div>
-                                        <a href="#" class="color-pink">좋아요</a>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                                            <a href="#" class="color-pink">좋아요</a>
+                                        </li>
+                                    {% if forloop.counter|divisibleby:3 or forloop.last %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
                         </div>
                         <button id="prevBtn" class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -185,7 +211,7 @@
             <!-- 코멘트 입력부분 -->
             <form action="{% url 'posts:comment_create' detail.id %}" method="POST" class="d-flex flex-column log-input w-100 gap-2">
                 {% csrf_token %}
-                <textarea name="" id="" cols="30" rows="10" class="border-0 chat-input" placeholder="이 영화에 대한 생각을 자유롭게 표현해주세요."></textarea>
+                <textarea name="content" id="content" type="text" cols="30" rows="10" class="border-0 chat-input" placeholder="이 영화에 대한 생각을 자유롭게 표현해주세요."></textarea>
                 <div class="d-flex flex-column align-items-end">
                     <input type="submit" value="저장" class="chat-btn border-0 mt-3">
                 </div>

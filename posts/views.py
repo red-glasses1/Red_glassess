@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
-from posts.models import Post, Comment
+from posts.models import Post, Comment, Recomment
 from .forms import CommentForm, RecommentForm, PostForm
 import requests
 
@@ -45,7 +45,7 @@ def detail(request, detail_pk):
 
   params = {
     "api_key": "6cd101ecd178ac88ad307ea8fccdf574",
-    "language": "ko",
+    "language": "ko-KR",
     }
     
   detail_response = requests.get(detail_url, params=params)
@@ -59,33 +59,52 @@ def detail(request, detail_pk):
   gallery_response = requests.get(gallery_url)
   gallery = gallery_response.json()['backdrops']
 
-  comments = Comment.objects.filter(pk=detail_pk).order_by('-created_at')
+  # 영화 출연진 정보받기
+  credits_url = f"https://api.themoviedb.org/3/movie/{detail_pk}/credits"
+
+  credits_response = requests.get(credits_url, params=params)
+  credits = credits_response.json()['cast'][:18]
+
+  comments = Comment.objects.filter(movie=detail_pk).order_by('-created_at')[:9]
 
   context = {
     'detail': detail,
     'genres': genres,
     'gallery': gallery,
-    'score':score,
+    'score': score,
+    'credits': credits,
     'comments': comments,
   }
   return render(request, 'posts/detail.html', context)
 
 
 def comments(request, detail_pk):
-  comments = Comment.objects.filter(post_id=detail_pk).order_by('-created_at')
+  comments = Comment.objects.filter(movie=detail_pk).order_by('-created_at')
   context = {
     'comments': comments,
+    'detail_pk': detail_pk,
   }
   return render(request, 'posts/comments.html', context)
 
 
 def comment(request, detail_pk, comment_pk):
-  post = Post.objects.get(pk=detail_pk)
-  comment = Comment.objects.filter(pk=comment_pk)
-  recomments = comment.recomment_set.all()
+  comment = Comment.objects.get(movie=detail_pk, pk=comment_pk)
+  recomments = comment.recomment_set.all().order_by('-created_at')
+
+  # 영화 디테일 정보받기
+  detail_url = f"https://api.themoviedb.org/3/movie/{detail_pk}"
+
+  params = {
+    "api_key": "6cd101ecd178ac88ad307ea8fccdf574",
+    "language": "ko-KR",
+    }
+
+  detail_response = requests.get(detail_url, params=params)
+  detail = detail_response.json()
+
   context = {
-    'post': post,
     'comment': comment,
+    'detail': detail,
     'recomments': recomments,
   }
   return render(request, 'posts/comment.html', context)
@@ -93,19 +112,17 @@ def comment(request, detail_pk, comment_pk):
 
 @login_required
 def comment_create(request, detail_pk):
-  post = Post.objects.get(pk=detail_pk)
   if request.method == 'POST':
     form = CommentForm(request.POST)
     if form.is_valid():
       comment = form.save(commit=False)
-      comment.post = post
+      comment.movie = detail_pk
       comment.user = request.user
       comment.save()
-      return redirect('posts:comment', detail_pk=post.pk, comment_pk=comment.pk)
+      return redirect('posts:detail', detail_pk)
   else:
     form = CommentForm()
   context = {
-    'post': post,
     'form': form,
   }
   return render(request, 'posts/detail.html', context)
@@ -134,6 +151,25 @@ def comment_update(request, detail_pk, comment_pk):
         'comment': comment,
     }
     return render(request, 'posts/detail.html', context)
+
+
+def recomment_create(request, detail_pk, comment_pk):
+    if request.method == 'POST':
+        form = RecommentForm(request.POST)
+        if form.is_valid():
+          recomment = form.save(commit=False)
+          recomment.comment_id = comment_pk
+          recomment.user = request.user
+          recomment.save()
+          return redirect('posts:comment', detail_pk, comment_pk)
+    else:
+      form =RecommentForm()
+    context = {
+      'form': form,
+    }
+    return render(request, 'posts/comment.html', context)
+
+
 
 
 def search(request):
