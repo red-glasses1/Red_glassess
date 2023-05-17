@@ -6,69 +6,70 @@ from datetime import timedelta,datetime
 
 # Create your models here.
 class Post(models.Model):
-  author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-  title = models.CharField(max_length=80)
-  image = models.ImageField(blank=False,upload_to='posters/')
-  content = models.TextField()
-  score = models.FloatField(null=True)
-  Tag_set = models.ManyToManyField('Tag',blank=True)
-  like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
-  released_at = models.CharField(max_length=200)
-  created_at = models.DateTimeField(auto_now_add=True)
-  updated_at = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=80)
+    image = models.ImageField(blank=False,upload_to='posters/')
+    content = models.TextField()
+    score = models.FloatField(null=True)
+    Tag_set = models.ManyToManyField('Tag',blank=True)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
+    released_at = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-  def __str__(self):
-    return self.content
+    def __str__(self):
+        return self.content
 
-  def extract_tag_list(self):
+    def extract_tag_list(self):
 
-    return re.findall(r"#([a-zA-Z\dㄱ-힣]+)", self.content)
-  
-  def count_likes_user(self):
+        return re.findall(r"#([a-zA-Z\dㄱ-힣]+)", self.content)
+
+    def count_likes_user(self):
         return self.like_users.count()
 
 
 class Tag(models.Model):
-  name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True)
 
-  def __str__(self):
-    return self.name
+    def __str__(self):
+        return self.name
 
 
 class Comment(models.Model):
-  user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-  like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comments')
-  content = models.CharField(max_length=200)
-  rating = models.FloatField(verbose_name='평점')
-  created_at = models.DateTimeField(auto_now_add=True)
-  updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    movie = models.IntegerField()
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comments')
+    content = models.CharField(max_length=200)
+#   rating = models.FloatField(verbose_name='평점')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-  def star_rating(self):
+    def star_rating(self):
         rounded_rating = self.rating
         return '⭐' * int(rounded_rating) + '☆' * (rounded_rating % 1 == 0.5)
     
-  def count_likes_user(self):
-      return self.like_users.count()
-  
-  @property
-  def created_string(self):
-      if self.created_at is None:
-          return False
+    def count_likes_user(self):
+        return self.like_users.count()
 
-      time = datetime.now(tz=timezone.utc) - self.created_at
+    @property
+    def created_string(self):
+        if self.created_at is None:
+            return False
 
-      if time < timedelta(minutes=1):
-          return '방금 전'
-      elif time < timedelta(hours=1):
-          return str(int(time.seconds / 60)) + '분 전'
-      elif time < timedelta(days=1):
-          return str(int(time.seconds / 3600)) + '시간 전'
-      elif time < timedelta(days=7):
-          time = datetime.now(tz=timezone.utc).date() - self.created_at.date()
-          return str(time.days) + '일 전'
-      else:
-          return False
-      
+        time = datetime.now(tz=timezone.utc) - self.created_at
+
+        if time < timedelta(minutes=1):
+            return '방금 전'
+        elif time < timedelta(hours=1):
+            return str(int(time.seconds / 60)) + '분 전'
+        elif time < timedelta(days=1):
+            return str(int(time.seconds / 3600)) + '시간 전'
+        elif time < timedelta(days=7):
+            time = datetime.now(tz=timezone.utc).date() - self.created_at.date()
+            return str(time.days) + '일 전'
+        else:
+            return False
+        
 
 class Recomment(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)

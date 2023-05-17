@@ -49,8 +49,12 @@ from django.conf import settings
 # profile = ProfileView.as_view()
 
 
-def profile(request):
-    return render(request, 'accounts/profile.html')
+def profile(request, username):
+    person = get_user_model().objects.get(username=username)
+    context = {
+        'person': person,
+    }
+    return render(request, 'accounts/profile.html', context)
 
 
 def login(request):

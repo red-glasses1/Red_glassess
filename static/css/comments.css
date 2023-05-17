@@ -16,6 +16,10 @@ li {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+.comments-nav {
+    position: sticky;
+    top: 58.36px;
+}
 .comment-card {
     width: 640px;
     height: 223px;
