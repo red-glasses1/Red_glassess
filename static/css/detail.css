@@ -131,7 +131,7 @@ font-size: 12px;
 }
 
 .credit-image_form {
-    width: 56px;
+    width: 70px;
     height: 56px;
     border-radius: 5px;
     overflow: hidden;
@@ -140,6 +140,10 @@ font-size: 12px;
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.credit-info {
+    width: 100%;
+    height: 56px;
 }
 
 

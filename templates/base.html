@@ -24,7 +24,7 @@
 
                 <div class="d-flex align-items-center gap-3">
                     <!-- 검색 -->
-                    <form class="d-flex" role="search">
+                    <form action="{% url 'posts:search' %}" method="GET" class="d-flex" role="search">
                         <label for="search" class="d-flex align-items-center search-label bg-light" id="search-label">
                             <span class="material-symbols-outlined text-body-tertiary" id='search-icon'>
                                 search
