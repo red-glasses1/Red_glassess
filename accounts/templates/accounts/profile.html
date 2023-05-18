@@ -1,4 +1,4 @@
-{% load bootstrap4 %}
+{% load bootstrap4 %} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,14 +12,14 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
   </head>
   <body>
     <!--User 모델의 인스턴스 -->
     <!--로그아웃 시에는 AnonymousUser-->
     <h1>{{ user }}</h1>
-    {{ user.is_authenticated }}
-    {% comment %} <a href="{% url 'accounts:profile_edit' %}">프로필 수정</a> {% endcomment %}
+    {{ user.is_authenticated }} {% comment %}
+    <a href="{% url 'accounts:profile_edit' %}">프로필 수정</a> {% endcomment %}
     <div class="container">
       <div class="img-cover">
         <img
@@ -42,55 +42,28 @@
         </div>
       </div>
       <div class="card-box">
-        <!-- 캐로젤 -->
-        <div
-          id="carouselExampleControls"
-          class="carousel slide"
-          data-bs-ride="carousel"
-        >
-          <div class="carousel-inner">
-            <div class="carousel-item active d-flex justify-content-between">
-              <div class="card-carousel">
-                <div>
-                  <h6><b>영화</b></h6>
-                  <div><b>★11</b></div>
-                </div>
-                <div class="text-small">보고싶어요 <span>0</span></div>
-              </div>
-              <div class="card-carousel">
-                <div>
-                  <h6><b>TV프로그램</b></h6>
-                  <div><b>★3</b></div>
-                </div>
-                <div class="text-small">보고싶어요 <span>0</span></div>
-              </div>
-              <div class="card-carousel">
-                <div>
-                  <h6><b>책</b></h6>
-                  <div><b>★0</b></div>
-                </div>
-                <div class="text-small">읽고싶어요 <span>0</span></div>
-              </div>
+        <!-- 박스 -->
+
+        <div class="card d-flex">
+          <div>
+            <div class="card-body">
+              <div class="title">영화</div>
+              <div class="title">★0</div>
             </div>
+
+            <div class="text">보고싶어요<span>0</span></div>
           </div>
-          <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="prev"
-          >
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#carouselExampleControls"
-            data-bs-slide="next"
-          >
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              로그아웃
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              회원탈퇴
+            </button>
+          </div>
         </div>
       </div>
     </div>
