@@ -1,5 +1,4 @@
-require('dotenv').config();
-var link =  document.location.href;
+var link =  window.location.href;
 var movieTitle = document.getElementById('movie-title').innerText; // 전달할 영화제목
 var sendText = document.getElementById('comment-content').innerText; // 전달할 텍스트
 
@@ -15,9 +14,8 @@ function shareFacebook() {
 
 function shareKakao() {
 
-    const kakaoJsKey = process.env.KAKAO_JS_KEY;
     // 사용할 앱의 JavaScript 키 설정
-    Kakao.init(kakaoJsKey);
+    Kakao.init('da98acbaa78a8dc3692f2a550e4da234');
 
     Kakao.Share.sendDefault({
         objectType: 'feed',
