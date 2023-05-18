@@ -1,14 +1,16 @@
 import os
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib.auth.forms import UserCreationForm
-from .forms import CustomUserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from .forms import CustomUserCreationForm, ProfileForm
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, TemplateView
 from pyexpat.errors import messages
+from accounts.models import Profile
+from django.contrib.auth.views import PasswordChangeView as AuthPasswordChangeView
 # from accounts.forms import ProfileForm
 # from accounts.models import Profile
 from django.conf import settings
@@ -23,33 +25,47 @@ from django.conf import settings
 #   template_name='signup_form.html'
 # )
 
-# @login_required
-# def profile_edit(request):
-#     # profile = get_object_or_404(Profile)  # = Profile.objects.get(user=request.user)
-#     try: # 프로필이 있으면
-#         profile = request.user.profile
-#     except Profile.DoesNotExist: # 없으면
-#         profile = None
+# 프로필 수정
+@login_required
+def profile_edit(request):
+    profile = get_object_or_404(Profile)  # = Profile.objects.get(user=request.user)
+    # try: # 프로필이 있으면
+    #     profile = request.user.profile
+    # except Profile.DoesNotExist: # 없으면
+    #     profile = None
 
-#     if request.method == "POST":
-#         form = ProfileForm(request.POST, request.FILES, instance=profile)
-#         if form.is_valid():
-#             profile = form.save(commit=False)
-#             profile.user = request.user
-#             form.save()
-#             messages.info(request,'프로필 수정이 완료되었습니다.')
-#         return redirect('accounts:profile')
-#     else:
-#         form = ProfileForm(instance=profile)
-#         return render(request,'profile_edit.html',{'form':form,'profile':profile})
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            form.save()
+            messages.info(request,'프로필 수정이 완료되었습니다.')
+        return redirect('accounts:profile', username=profile.username)
+    else:
+        form = ProfileForm(instance=profile)
+        return render(request,'accounts/profile_edit.html',{'form':form,'profile':profile})
 
-# class ProfileView(LoginRequiredMixin, TemplateView):
-#     template_name = 'profile.html'
+# 비밀번호 수정
+class PasswordChangeView(LoginRequiredMixin,AuthPasswordChangeView):
+  success_url = reverse_lazy('index:root')
+  template_name = 'accounts/password_change_form.html'
+  # 중복 비밀번호에 대한 검사
+  form_class = PasswordChangeForm
+  # 자체 뷰에서도 form_valid가 있으므로 부모의 메서드를 가져오게 되면 초기화를 해줘야 한다.(super())
+  def form_valid(self,form):
+    messages.success(self.request,'암호를 변경했습니다.')
+    return super().form_class(form)
 
-# profile = ProfileView.as_view()
+password_change = PasswordChangeView.as_view()
+
+class ProfileView(LoginRequiredMixin, TemplateView):
+    template_name = 'profile.html'
+
+profile = ProfileView.as_view()
 
 
-def profile(request, username):
+def profile_detail(request, username):
     person = get_user_model().objects.get(username=username)
     context = {
         'person': person,
@@ -105,17 +121,18 @@ def signup(request):
     return render(request, 'index.html', context)
 
 @login_required
-def user_follow(request,nickname):
-  follow_user = get_object_or_404(get_user_model(),nickname=nickname,is_active=True)
+def user_follow(request):
+  follow_user = get_object_or_404(get_user_model(),nickname=request.user.username,is_active=True)
   request.follow_user.follower_set.add(follow_user)
-  follow_user.follower_set.add(request.user)
+  follow_user.follower_set.add(request.user.username)
   redirect_url = request.META.get("HTTP_REFERER",'index')
-  return redirect(redirect_url,nickname=nickname)
+  return redirect(redirect_url,nickname=request.user.username)
 
 @login_required
-def user_unfollow(request,nickname):
-  follow_user = get_object_or_404(get_user_model(),nickname=nickname,is_active=True)
+def user_unfollow(request):
+  follow_user = get_object_or_404(get_user_model(),nickname=request.user.username,is_active=True)
   request.follow_user.remove(follow_user)
-  follow_user.follower_set.remove(request.user)
+  follow_user.follower_set.remove(request.user.username)
   redirect_url = request.META.get("HTTP_REFERER",'index')
-  return redirect(redirect_url,nickname=nickname)
+  return redirect(redirect_url,nickname=request.user.username)
+
