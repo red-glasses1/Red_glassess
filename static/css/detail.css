@@ -240,3 +240,16 @@ li {
     border-radius: 5px;
     border: none;
 }
+
+.detail-like_btn {
+    color: rgb(80, 80, 80);
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+}
+.detail-unlike_btn {
+    color: #ff2f6e;
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+}

@@ -5,39 +5,39 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from posts.models import Post, Comment, Recomment
-from .forms import CommentForm, RecommentForm, PostForm
+from .forms import CommentForm, RecommentForm
 import requests
 
 
 # Create your views here.
 # 포스트 생성
-@login_required
-def post_new(request):
-  if request.method == 'POST':
-    form = PostForm(request.POST,request.FILES)
-    if form.is_valid():
-      post = form.save(commit=False)
-      post.author = request.user
-      post.save()
-      # 모델에 작성할 수도 있음
-      # for tag_name in post.extract_tag_list():
-      #   tag, _ = Tag.objects.get_or_create(name='tag_name')
-      post.tag_set.add(*post.extract_tag_list())
-      messages.info(request, '포스팅을 저장했습니다.')
-      return redirect('/')
-  else:
-    # get 요청일때
-    form = PostForm()
-  return render(request, 'post_form.html',{
-    'form':form
-  })
-# 메인 페이지 (포스팅된 리스트 나열), 검색기능 구현 - FBV
-def post_list(request):
-  qs = Post.objects.all()
-  q = request.GET.get('q','')
-  if q:
-    qs = qs.filter(Q(title__icontains=q) & Q(content__icontains=q)) # 모델의 타이틀 속성 중에 q 인자에 삽입된 값 을 검색
-  return render(request,'post_search.html',{'qs': qs,'q':q})
+# @login_required
+# def post_new(request):
+#   if request.method == 'POST':
+#     form = PostForm(request.POST,request.FILES)
+#     if form.is_valid():
+#       post = form.save(commit=False)
+#       post.author = request.user
+#       post.save()
+#       # 모델에 작성할 수도 있음
+#       # for tag_name in post.extract_tag_list():
+#       #   tag, _ = Tag.objects.get_or_create(name='tag_name')
+#       post.tag_set.add(*post.extract_tag_list())
+#       messages.info(request, '포스팅을 저장했습니다.')
+#       return redirect('/')
+#   else:
+#     # get 요청일때
+#     form = PostForm()
+#   return render(request, 'post_form.html',{
+#     'form':form
+#   })
+# # 메인 페이지 (포스팅된 리스트 나열), 검색기능 구현 - FBV
+# def post_list(request):
+#   qs = Post.objects.all()
+#   q = request.GET.get('q','')
+#   if q:
+#     qs = qs.filter(Q(title__icontains=q) & Q(content__icontains=q)) # 모델의 타이틀 속성 중에 q 인자에 삽입된 값 을 검색
+#   return render(request,'post_search.html',{'qs': qs,'q':q})
 
 
 # 디테일 페이지
@@ -67,9 +67,22 @@ def detail(request, detail_pk):
   credits_response = requests.get(credits_url, params=params)
   credits = credits_response.json()['cast'][:10]
 
+  if detail_response.status_code == 200 and gallery_response.status_code == 200 and credits_response.status_code == 200:
+      movie_data = detail
+      id = movie_data['id']
+      title = movie_data['title']
+      content = movie_data['overview']
+      release_date = movie_data['release_date']
+      posts = Post.objects.all()
+      movie = Post(id=id, title=title, content=content, released_at=release_date)
+      if movie not in posts:
+        movie.save()
+  else:
+      raise Exception('영화 정보를 가져오는데 실패했습니다.')
   comments = Comment.objects.filter(movie=detail_pk).order_by('-created_at')[:9]
 
   context = {
+    'movie': movie,
     'detail': detail,
     'genres': genres,
     'gallery': gallery,
@@ -78,6 +91,23 @@ def detail(request, detail_pk):
     'comments': comments,
   }
   return render(request, 'posts/detail.html', context)
+
+
+# 영화 보고싶어요 기능
+@login_required
+def likes(request, detail_pk):
+    post = Post.objects.get(pk=detail_pk)
+
+    if request.user in post.like_users.all():
+        post.like_users.remove(request.user)
+        is_liked = False
+    else:
+        post.like_users.add(request.user)
+        is_liked =True
+    context = {
+        'is_liked': is_liked,
+    }
+    return JsonResponse(context)
 
 
 # 코멘트 모음 페이지

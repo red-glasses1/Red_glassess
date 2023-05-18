@@ -7,7 +7,7 @@ app_name = 'posts'
 urlpatterns = [
   # 영화 디테일 페이지관련
   path('<int:detail_pk>/', views.detail, name='detail'),
-  # path('<int:post_pk>/likes/', views.likes, name='likes'),
+  path('<int:detail_pk>/likes/', views.likes, name='likes'),
 
   # 코멘트 모음 페이지
   path('<int:detail_pk>/comments/', views.comments, name='comments'),

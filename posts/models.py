@@ -7,12 +7,12 @@ from django.urls import reverse
 
 # Create your models here.
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=80)
-    image = models.ImageField(blank=False,upload_to='posters/')
+    # image = models.ImageField(blank=False,upload_to='posters/')
     content = models.TextField()
-    score = models.FloatField(null=True)
-    Tag_set = models.ManyToManyField('Tag',blank=True)
+    # score = models.FloatField(null=True)
+    # Tag_set = models.ManyToManyField('Tag',blank=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
     released_at = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -51,10 +51,6 @@ class Comment(models.Model):
 #   rating = models.FloatField(verbose_name='평점')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    def star_rating(self):
-        rounded_rating = self.rating
-        return '⭐' * int(rounded_rating) + '☆' * (rounded_rating % 1 == 0.5)
     
     def count_likes_user(self):
         return self.like_users.count()
