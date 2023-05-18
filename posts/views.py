@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView
 from posts.models import Post, Comment, Recomment
@@ -39,6 +40,7 @@ def post_list(request):
   return render(request,'post_search.html',{'qs': qs,'q':q})
 
 
+# 디테일 페이지
 def detail(request, detail_pk):
   # 영화 디테일 정보받기
   detail_url = f"https://api.themoviedb.org/3/movie/{detail_pk}"
@@ -78,6 +80,7 @@ def detail(request, detail_pk):
   return render(request, 'posts/detail.html', context)
 
 
+# 코멘트 모음 페이지
 def comments(request, detail_pk):
   comments = Comment.objects.filter(movie=detail_pk).order_by('-created_at')
   context = {
@@ -87,6 +90,7 @@ def comments(request, detail_pk):
   return render(request, 'posts/comments.html', context)
 
 
+# 단일 코멘트 페이지
 def comment(request, detail_pk, comment_pk):
   comment = Comment.objects.get(movie=detail_pk, pk=comment_pk)
   recomments = comment.recomment_set.all().order_by('-created_at')
@@ -110,6 +114,7 @@ def comment(request, detail_pk, comment_pk):
   return render(request, 'posts/comment.html', context)
 
 
+# 코멘트 생성
 @login_required
 def comment_create(request, detail_pk):
   if request.method == 'POST':
@@ -128,31 +133,51 @@ def comment_create(request, detail_pk):
   return render(request, 'posts/detail.html', context)
 
 
+# 코멘트 수정
 @login_required
 def comment_update(request, detail_pk, comment_pk):
-    post = Post.objects.get(pk=detail_pk)
-    comment = Comment.objects.get(post_id=detail_pk, pk=comment_pk)
+    comment = Comment.objects.get(pk=comment_pk)
     if request.user == comment.user:
         if request.method == 'POST':
             form = CommentForm(request.POST, instance=comment)
             if form.is_valid():
                 comment = form.save(commit=False)
-                comment.post = post
+                comment.movie = detail_pk
                 comment.user = request.user
                 comment.save()
-                return redirect('posts:comment', detail_pk=post.pk, comment_pk=comment.pk)
-        else:
-            form = CommentForm(instance=comment)
+                return redirect('posts:comment', detail_pk, comment_pk)
+    return redirect('posts:comment', detail_pk, comment_pk)
+
+
+# 코멘트 삭제
+@login_required
+def comment_delete(request, detail_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.user == comment.user:
+        comment.delete()
+    return redirect('posts:detail', detail_pk)
+
+
+# 코멘트 좋아요
+@login_required
+def comment_likes(request, detail_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+
+    if request.user in comment.like_users.all():
+        comment.like_users.remove(request.user)
+        is_liked = False
     else:
-        return redirect('posts:comment', detail_pk=post.pk, comment_pk=comment.pk)
+        comment.like_users.add(request.user)
+        is_liked =True
     context = {
-        'form': form,
-        'post': post,
-        'comment': comment,
+        'is_liked': is_liked,
+        'like_count': comment.like_users.count(),
     }
-    return render(request, 'posts/detail.html', context)
+    return JsonResponse(context)
 
 
+# 코멘트 댓글 생성
+@login_required
 def recomment_create(request, detail_pk, comment_pk):
     if request.method == 'POST':
         form = RecommentForm(request.POST)
@@ -170,8 +195,40 @@ def recomment_create(request, detail_pk, comment_pk):
     return render(request, 'posts/comment.html', context)
 
 
+# 코멘트 댓글 삭제
+@login_required
+def recomment_delete(request, detail_pk, comment_pk, recomment_pk):
+  recomment = Recomment.objects.get(pk=recomment_pk)
+  if recomment.user == request.user:
+    recomment.delete()
+  return redirect('posts:comment', detail_pk, comment_pk)
 
 
+# 코멘트 댓글 수정
+@login_required
+def recomment_update(request):
+  return
+
+
+# 코멘트 댓글 좋아요
+@login_required
+def recomment_likes(request, detail_pk, comment_pk, recomment_pk):
+    recomment = Recomment.objects.get(pk=recomment_pk)
+
+    if request.user in recomment.like_users.all():
+        recomment.like_users.remove(request.user)
+        is_liked = False
+    else:
+        recomment.like_users.add(request.user)
+        is_liked =True
+    context = {
+        'is_liked': is_liked,
+        'like_count': recomment.like_users.count(),
+    }
+    return JsonResponse(context)
+
+
+# 검색기능 및 페이지
 def search(request):
   if 'q' in request.GET:
     query = request.GET.get('q')

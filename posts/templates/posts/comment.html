@@ -24,29 +24,54 @@
                         </a>
                         <div class="font-12 text-secondary">{{ comment.created_string }}</div>
                     </div>
-                    <h1 class="mt-2 m-0 fs-6">{{ detail.title }}</h1>
+                    <a href="{% url 'posts:detail' detail.id %}">
+                        <h1 class="mt-2 m-0 fs-6">{{ detail.title }}</h1>
+                    </a>
                     <div class="font-12 text-secondary">개봉 : {{ detail.release_date }}</div>
                     <div class="comment-score font-13">★4.5</div>
                     <div class="font-15 comment-content">{{ comment.content }}</div>
                     <div class="d-flex gap-3">
-                        <div class="font-12 text-secondary">좋아요 {{ comment.count_likes_user }}</div>
+                        <div class="d-flex gap-1 font-12 text-secondary">
+                            <span>좋아요</span>
+                            <span id="comment-like-count">{{ comment.count_likes_user }}</span>
+                        </div>
                         <div class="font-12 text-secondary">댓글 {{ comment.recomment_set.all|length }}</div>
                     </div>
                 </div>
-                <div>
+                <div class="d-flex flex-column justify-content-between">
                     <div class="comment-poster_wrapper">
-                        <img
-                        src="https://image.tmdb.org/t/p/w500/{{ detail.poster_path }}"
-                        alt=""
-                        />
+                        <img src="https://image.tmdb.org/t/p/w500/{{ detail.poster_path }}" alt=""/>
                     </div>
+                    {% if request.user == comment.user %}
+                        <div class="d-flex gap-2">
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#commentUpdateModal" class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn">
+                                <div class="font-14 text-secondary">수정</div>
+                            </a>
+                            <form action="{% url 'posts:comment_delete' detail.id comment.id %}" method="POST" class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn">
+                                {% csrf_token %}
+                                <input type='submit' class="font-14 text-secondary border-0 bg-transparent p-0" value='삭제' onclick="return confirm('삭제 하시겠습니까?')">
+                            </form>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="d-flex align-items-center justify-content-evenly gap-1 p-2 border-bottom border-top feature-btn">
-                <a href="#" class="d-flex align-items-center justify-content-center  gap-2 font-15 text-secondary">
-                    <span class="material-icons-outlined font-15">thumb_up</span>
-                    좋아요
-                </a>
+                <div class="w-100 d-flex justify-content-center">
+                    <form class="comment-like-forms w-100 d-flex align-items-center" data-detail-id="{{ detail.id }}" data-comment-id="{{ comment.id }}">
+                        {% csrf_token %}
+                        {% if request.user in comment.like_users.all %}
+                        <button type="submit" id="like-{{ detail.id }}-{{ comment.id }}" class="d-flex align-items-center justify-content-center border-0 w-100 gap-2 font-15 bg-transparent color-pink">
+                            <span class="material-icons-outlined font-15">thumb_up</span>
+                            <span>좋아요</span>
+                        </button>
+                        {% else %}
+                        <button type="submit" id="like-{{ detail.id }}-{{ comment.id }}" class="d-flex align-items-center justify-content-center border-0 w-100 gap-2 font-15 text-secondary bg-transparent">
+                            <span class="material-icons-outlined font-15">thumb_up</span>
+                            <span>좋아요</span>
+                        </button>
+                        {% endif %}
+                    </form>
+                </div>
                 <div class="vertical-line"></div>
                 <a type="button" data-bs-toggle="modal" data-bs-target="#chatModal" class="d-flex align-items-center justify-content-center gap-2 font-15 text-secondary">
                     <span class="material-icons-outlined font-15">chat</span>
@@ -80,21 +105,51 @@
         <section>
             {% for recomment in recomments %}
             <li class="d-flex gap-2 py-3 border-bottom">
-                <div>
+                <a href="{% url 'accounts:profile' recomment.user.username %}">
                     <div class="chat-profile_form">
                         <img src="{% static 'img/no_profile.jpg' %}" alt="">
                     </div>
-                </div>
+                </a>
                 <div class="w-100">
                     <div class="d-flex justify-content-between">
-                        <div class="font-14"><b>{{ recomment.user }}</b></div>
+                        <div class="font-14 d-flex align-items-center gap-1">
+                            <a href="{% url 'accounts:profile' recomment.user.username %}">
+                                <b>{{ recomment.user }}</b>
+                            </a>
+                            {% if comment.user == recomment.user %}
+                            <span class="material-symbols-outlined color-pink font-15">verified</span>
+                            {% endif %}
+                        </div>
                         <div class="text-secondary font-13">{{ recomment.created_string }}</div>
                     </div>
-                    <div class="font-15">{{ recomment.content }}</div>
-                    <a href="#" class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn">
-                        <span class="material-icons-outlined font-14 text-secondary">thumb_up</span>
-                        <div class="font-14 text-secondary">{{ recomment.count_likes_user }}</div>
-                    </a>
+                    <div class="font-15" id="recomment-content">{{ recomment.content }}</div>
+                    <div class="d-flex align-items-center justify-content-between gap-4">
+                        <form data-detail-id="{{ detail.id }}" data-comment-id="{{ comment.id }}" data-recomment-id="{{ recomment.id }}" class="recomment-like-forms d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn">
+                            {% csrf_token %}
+                            {% if request.user in recomment.like_users.all %}
+                            <button type="submit" class="d-flex align-items-center gap-1 recomment-like-forms border-0 bg-transparent">
+                                <span id="like-icon-{{ detail.id }}-{{ comment.id }}-{{ recomment.id }}" class="material-icons-outlined recomment-unlike_icon recomment-unlike_btn">thumb_up</span>
+                                <span id="like-count-{{ detail.id }}-{{ comment.id }}-{{ recomment.id }}" class="recomment-unlike_count recomment-unlike_btn">{{ recomment.count_likes_user }}</span>
+                            </button>
+                            {% else %}
+                            <button type="submit" class="d-flex align-items-center gap-1 recomment-like-forms border-0 bg-transparent">
+                                <span id="like-icon-{{ detail.id }}-{{ comment.id }}-{{ recomment.id }}" class="material-icons-outlined recomment-like_icon recomment-like_btn">thumb_up</span>
+                                <span id="like-count-{{ detail.id }}-{{ comment.id }}-{{ recomment.id }}" class="recomment-unlike_count recomment-like_btn">{{ recomment.count_likes_user }}</span>
+                            </button>
+                            {% endif %}
+                        </form>
+                        {% if request.user == recomment.user %}
+                        <div class="d-flex gap-2">
+                            <a type="button" id="recomment-update" class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn">
+                                <div class="font-14 text-secondary">수정</div>
+                            </a>
+                            <form action="{% url 'posts:recomment_delete' detail.id comment.id recomment.id %}" method="POST" class="d-flex align-items-center justify-content-center gap-2 mt-3 chat-like_btn">
+                                {% csrf_token %}
+                                <input type='submit' class="font-14 text-secondary border-0 bg-transparent p-0" value='삭제' onclick="return confirm('삭제 하시겠습니까?')">
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
             </li>
             {% endfor %}
@@ -123,6 +178,31 @@
         </div>
     </div>
 </div>
+
+<!-- 코멘트 수정 Modal -->
+<div class="modal fade" id="commentUpdateModal" tabindex="-1" aria-labelledby="commentUpdateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content w-100 p-3">
+            <!-- 코멘트 타이틀 -->
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h6 class="m-0"><b>{{ detail.title }}</b></h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- 코멘트 입력부분 -->
+            <form action="{% url 'posts:comment_update' detail.id comment.id %}" method="POST" class="d-flex flex-column log-input w-100 gap-2">
+                {% csrf_token %}
+                <textarea name="content" id="content" type="text" cols="30" rows="10" class="border-0 chat-input" placeholder="{{ comment.content }}"></textarea>
+                <div class="d-flex flex-column align-items-end">
+                    <input type="submit" value="수정" class="chat-btn border-0 mt-3" onclick="return confirm('수정 하시겠습니까?')">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}
 
-{% block script %}{% endblock script %}
+{% block script %}
+<script src="{% static 'js/recommentUpdate.js' %}"></script>
+<script src="{% static 'js/commentLikes.js' %}"></script>
+<script src="{% static 'js/recommentLikes.js' %}"></script>
+{% endblock script %}

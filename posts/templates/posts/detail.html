@@ -139,7 +139,9 @@
                 <div>
                     <div class="d-flex justify-content-between mb-3">
                         <h2 class="d-flex gap-2"><b>코멘트</b><span class="text-secondary">{{ comments|length }}</span></h2>
+                        {% if comments %}
                         <a href="{% url 'posts:comments' detail.id %}" class="color-pink">더보기</a>
+                        {% endif %}
                     </div>
 
                     <!-- 코멘트 carousel -->
@@ -168,14 +170,21 @@
                                             <div class="d-flex align-items-center gap-3 border-bottom mb-2">
                                                 <div class="d-flex align-items-center gap-2 py-2">
                                                     <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                                                    <div class="font-14">{{ comment.count_likes_user }}</div>
+                                                    <div class="font-14" id="like-count-{{ detail.id }}-{{ comment.id }}">{{ comment.count_likes_user }}</div>
                                                 </div>
                                                 <div class="d-flex align-items-center gap-2">
                                                     <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
                                                     <div class="font-14">{{ comment.recomment_set.all|length }}</div>
                                                 </div>
                                             </div>
-                                            <a href="#" class="color-pink">좋아요</a>
+                                            <form class="comment-like-forms" data-detail-id="{{ detail.id }}" data-comment-id="{{ comment.id }}">
+                                                {% csrf_token %}
+                                                {% if request.user in comment.like_users.all %}
+                                                <input type="submit" id="like-{{ detail.id }}-{{ comment.id }}" class="comment-unlike_btn" value="좋아요">
+                                                {% else %}
+                                                <input type="submit" id="like-{{ detail.id }}-{{ comment.id }}" class="comment-like_btn" value="좋아요">
+                                                {% endif %}
+                                            </form>
                                         </li>
                                     {% if forloop.counter|divisibleby:3 or forloop.last %}
                                         </ul>
@@ -226,4 +235,5 @@
 {% block script %}
 <script src="{% static 'js/detailRating.js' %}"></script>
 <script src="{% static 'js/detailNavbar.js' %}"></script>
+<script src="{% static 'js/detail-commentLikes.js' %}"></script>
 {% endblock script %}

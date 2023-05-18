@@ -32,14 +32,21 @@
             <div class="d-flex align-items-center gap-3 border-bottom mb-2">
                 <div class="d-flex align-items-center gap-2 py-2">
                     <span class="material-symbols-outlined text-secondary font-15">thumb_up</span>
-                    <div class="font-14">{{ comment.count_likes_user }}</div>
+                    <div class="font-14" id="like-count-{{ detail_pk }}-{{ comment.id }}">{{ comment.count_likes_user }}</div>
                 </div>
                 <div class="d-flex align-items-center gap-2">
                     <span class="material-symbols-outlined text-secondary font-15">chat_bubble</span>
                     <div class="font-14">{{ comment.recomment_set.all|length }}</div>
                 </div>
             </div>
-            <a href="#" class="color-pink">좋아요</a>
+            <form class="comment-like-forms" data-detail-id="{{ detail_pk}}" data-comment-id="{{ comment.id }}">
+                {% csrf_token %}
+                {% if request.user in comment.like_users.all %}
+                <input type="submit" id="like-{{ detail_pk }}-{{ comment.id }}" class="comment-unlike_btn" value="좋아요">
+                {% else %}
+                <input type="submit" id="like-{{ detail_pk }}-{{ comment.id }}" class="comment-like_btn" value="좋아요">
+                {% endif %}
+            </form>
         </li>
         {% endfor %}
     </div>
@@ -48,4 +55,5 @@
 
 {% block script %}
 <script src="{% static 'js/commentsTitle.js' %}"></script>
+<script src="{% static 'js/commentsLikes.js' %}"></script>
 {% endblock script %}
