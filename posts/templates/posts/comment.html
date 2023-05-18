@@ -17,7 +17,11 @@
                         <a href="{% url 'accounts:profile' comment.user.username %}">
                             <div class="d-flex align-items-center gap-2">
                                 <div class="profile-image-form">
+                                    {% if comment.user.image %}
+                                    <img src="{{ comment.user.image.url }}" alt="">
+                                    {% else %}
                                     <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                                    {% endif %}
                                 </div>
                                 <div class="font-12 text-secondary">{{ comment.user.username }}</div>
                             </div>
@@ -123,7 +127,11 @@
             <li class="d-flex gap-2 py-3 border-bottom">
                 <a href="{% url 'accounts:profile' recomment.user.username %}">
                     <div class="chat-profile_form">
+                        {% if recomment.user.image %}
+                        <img src="{{ recomment.user.image.url }}" alt="">
+                        {% else %}
                         <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                        {% endif %}
                     </div>
                 </a>
                 <div class="w-100">

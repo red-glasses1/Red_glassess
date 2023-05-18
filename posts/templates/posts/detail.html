@@ -168,7 +168,11 @@
                                             <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
                                                 <a href="{% url 'accounts:profile' comment.user.username %}" class="d-flex align-items-center gap-2 py-2">
                                                     <div class="profile-image-form">
+                                                        {% if comment.user.image %}
+                                                        <img src="{{ comment.user.image.url }}" alt="">
+                                                        {% else %}
                                                         <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                                                        {% endif %}
                                                     </div>
                                                     <div><b>{{ comment.user }}</b></div>
                                                 </a>

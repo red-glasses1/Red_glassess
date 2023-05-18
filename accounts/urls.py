@@ -11,6 +11,7 @@ urlpatterns = [
   path('login/', views.login, name='login'),
   path('logout/', views.logout, name='logout'),
   path('delete/', views.delete, name='delete'),
+  path('<str:username>/follower/', views.follow, name='follow'),
   re_path(r'^(?P<nickname>[\w.@+-]+)/follow/$', views.user_follow,name='user_follow'),
   re_path(r'^(?P<nickname>[\w.@+-]+)/unfollow/$',views.user_unfollow,name='user_unfollow'),
 ]

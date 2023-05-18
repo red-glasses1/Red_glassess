@@ -14,12 +14,31 @@
   </div>
   <div class="profile-info">
     <div class="profile-image">
+      {% if person.image %}
+      <img src="{{ person.image.url }}" alt="">
+      {% else %}
       <img src="{% static 'img/no_profile.jpg' %}" alt="">
+      {% endif %}
     </div>
-    <h3 class="mt-2"><b>{{person}}</b></h3>
-    <p>프로필이 없습니다.</p>
+    <div class="d-flex align-items-center gap-3">
+      <h3 class="mt-2"><b>{{person}}</b></h3>
+      {% if request.user != person %}
+      <form id="follow-form" data-user-id="{{ person.username }}">
+        {% csrf_token %}
+        {% if request.user in person.followers.all %}
+        <input type="submit" value='언팔로우' class="profile-unfollow_btn">
+        {% else %}
+        <input type="submit" value='팔로우' class="profile-follow_btn">
+        {% endif %}
+      </form>
+      {% endif %}
+    </div>
+    <div>
+      팔로워 <a type="button" data-bs-toggle="modal" data-bs-target="#followersModal"><b><span id="followers-count">{{ person.followers.all|length }}</span></b></a> · 
+      팔로잉 <a type="button" data-bs-toggle="modal" data-bs-target="#followingsModal"><b><span id="followings-count">{{ person.followings.all|length }}</span></b></a>
+    </div>
   </div>
-  <div class="like">
+  {% comment %} <div class="like">
     <div class="d-flex align-items-center">
       <img
         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiNFRjY5MkUiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTEuMTggMTEuOTZoMy43NHY4LjM2SDEuMTh6TTE1Ljc1IDE2LjgzaDMuNzR2My40OWgtMy43NHpNNi4wNCA5LjEyaDMuNzR2MTEuMkg2LjA0ek0xMC45IDEzLjg0aDMuNzR2Ni40OEgxMC45eiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiNGRkNBMjIiIGQ9Ik0xNy40NCAxLjM3bDEuNjYgNCA0LjMxLjM0LTMuMjggMi44MSAxIDQuMjEtMy42OS0yLjI2LTMuNjkgMi4yNiAxLjAxLTQuMjEtMy4yOS0yLjgxIDQuMzItLjM0eiIvPgogICAgPC9nPgo8L3N2Zz4K"
@@ -27,7 +46,7 @@
       />
       <span class="text-middle">&nbsp취향분석</span>
     </div>
-  </div>
+  </div> {% endcomment %}
     <!-- 박스 -->
       {% comment %} <div>
         <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -67,4 +86,67 @@
     </div>
   </div>
 </div>
+
+<!-- 팔로워 Modal -->
+<div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">팔로워</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for follower in person.followers.all %}
+        <a href="{% url 'accounts:profile' follower.username %}">
+          <div class="d-flex align-items-center gap-3">
+            <div class="follow-profile_form">
+              {% if follower.image %}
+              <img src="{{ follower.image.url }}" alt="">
+              {% else %}
+              <img src="{% static 'img/no_profile.jpg' %}" alt="">
+              {% endif %}
+            </div>
+            <div>{{ follower.username }}</div>
+          </div>
+        </a>
+        <hr>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 팔로잉 Modal -->
+<div class="modal fade" id="followingsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">팔로잉</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for following in person.followings.all %}
+        <a href="{% url 'accounts:profile' following.username %}">
+          <div class="d-flex align-items-center gap-3">
+            <div class="follow-profile_form">
+              {% if follower.image %}
+              <img src="{{ following.image.url }}" alt="">
+              {% else %}
+              <img src="{% static 'img/no_profile.jpg' %}" alt="">
+              {% endif %}
+            </div>
+            <div>{{ following.username }}</div>
+          </div>
+        </a>
+        <hr>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/follow.js' %}"></script>
+{% endblock script %}
