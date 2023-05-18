@@ -15,36 +15,21 @@ from django.contrib.auth.views import PasswordChangeView as AuthPasswordChangeVi
 # from accounts.models import Profile
 from django.conf import settings
 
-# User = get_user_model()
-
-# Create your views here.
-# signup = CreateView.as_view(
-#   model=User,
-#   success_url = reverse_lazy('posts:index'),
-#   form_class=UserCreationForm,
-#   template_name='signup_form.html'
-# )
 
 # 프로필 수정
 @login_required
 def profile_edit(request):
-    profile = get_object_or_404(Profile)  # = Profile.objects.get(user=request.user)
-    # try: # 프로필이 있으면
-    #     profile = request.user.profile
-    # except Profile.DoesNotExist: # 없으면
-    #     profile = None
-
     if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = request.user
             form.save()
-            messages.info(request,'프로필 수정이 완료되었습니다.')
-        return redirect('accounts:profile', username=profile.username)
+            return redirect('accounts:profile', username=request.user.username)
     else:
-        form = ProfileForm(instance=profile)
-        return render(request,'accounts/profile_edit.html',{'form':form,'profile':profile})
+        form = ProfileForm(instance=request.user)
+    context = {
+        'form': form,
+    }
+    return render(request,'accounts/profile_edit.html', context)
 
 # 비밀번호 수정
 class PasswordChangeView(LoginRequiredMixin,AuthPasswordChangeView):
@@ -119,6 +104,13 @@ def signup(request):
         'form': form,
     }
     return render(request, 'index.html', context)
+
+
+@login_required
+def delete(request):
+    request.user.delete()
+    return redirect('index')
+
 
 @login_required
 def user_follow(request):

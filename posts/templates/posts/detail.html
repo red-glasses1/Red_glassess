@@ -44,22 +44,32 @@
                     </span>
                 </div>
                 <div class="vertical-line"></div>
-                <a href="#" class="d-flex align-items-center gap-2 feature-btn">
-                    <span class="material-symbols-outlined">add</span>
-                    <span class="font-14">보고싶어요</span>
-                </a>
+                <form class="detail-like-forms d-flex align-items-center" data-detail-id="{{ detail.id }}">
+                    {% csrf_token %}
+                    {% if request.user in movie.like_users.all %}
+                    <button type="submit" class="d-flex align-items-center gap-2 feature-btn border-0 bg-transparent detail-unlike_btn" id="like-{{ detail.id }}">
+                        <span class="material-symbols-outlined">add</span>
+                        <span>보고싶어요</span>
+                    </button>
+                    {% else %}
+                    <button type="submit" class="d-flex align-items-center gap-2 feature-btn border-0 bg-transparent detail-like_btn" id="like-{{ detail.id }}">
+                        <span class="material-symbols-outlined">add</span>
+                        <span>보고싶어요</span>
+                    </button>
+                    {% endif %}
+                </form>
                 <a type="button" data-bs-toggle="modal" data-bs-target="#commentModal" class="d-flex align-items-center gap-2 feature-btn">
                     <span class="material-symbols-outlined">edit</span>
                     <span class="font-14">코멘트</span>
                 </a>
-                <a href="#" class="d-flex align-items-center gap-2 feature-btn">
+                {% comment %} <a href="#" class="d-flex align-items-center gap-2 feature-btn">
                     <span class="material-symbols-outlined">visibility</span>
                     <span class="font-14">보는중</span>
                 </a>
                 <a href="#" class="d-flex align-items-center gap-2 feature-btn">
                     <span class="material-symbols-outlined">more_horiz</span>
                     <span class="font-14">더보기</span>
-                </a>
+                </a> {% endcomment %}
                 </div>
             </div>
         </div>
@@ -127,13 +137,13 @@
 
 
                 <!-- 별점 그래프 -->
-                <div class="mb-4 pb-3 border-bottom">
+                {% comment %} <div class="mb-4 pb-3 border-bottom">
                     <div class="d-flex justify-content-between mb-3">
                         <h2><b>별점 그래프</b></h2>
                         <div>평균 ★{{ score }}</div>
                     </div>
                     <div>그래프</div>
-                </div>
+                </div> {% endcomment %}
 
                 <!-- 코멘트 -->
                 <div>
@@ -233,6 +243,7 @@
 {% endblock content %}
 
 {% block script %}
+<script src="{% static 'js/detailLikes.js' %}"></script>
 <script src="{% static 'js/detailRating.js' %}"></script>
 <script src="{% static 'js/detailNavbar.js' %}"></script>
 <script src="{% static 'js/detail-commentLikes.js' %}"></script>

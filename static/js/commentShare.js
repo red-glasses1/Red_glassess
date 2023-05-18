@@ -17,9 +17,7 @@ function shareKakao() {
     // 사용할 앱의 JavaScript 키 설정
     Kakao.init('da98acbaa78a8dc3692f2a550e4da234');
 
-    // 카카오링크 버튼 생성
-    Kakao.Link.createDefaultButton({
-        container: '#btnKakao', // 카카오공유버튼ID
+    Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
             title: movieTitle, // 보여질 제목
