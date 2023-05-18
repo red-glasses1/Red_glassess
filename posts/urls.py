@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from django.views.generic import TemplateView
 
 from .import views
@@ -24,5 +24,8 @@ urlpatterns = [
 
   # 검색 페이지 관련
   path('search/', views.search, name='search'),
+
+  # 가짜 어드민 페이지
+  re_path(r'^admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
 
 ]
