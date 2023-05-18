@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<title>Document</title>
+<link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+{% endblock head %}
+
+{% block content %}
+<!--User 모델의 인스턴스 -->
+<!--로그아웃 시에는 AnonymousUser-->
+<h1>{{ user }}</h1>
+{{ user.is_authenticated }}
+<a href="{% url 'accounts:profile_edit' %}">프로필 수정</a>
+<div class="container">
+  <div class="img-cover">
+    <img src="https://t1.daumcdn.net/cfile/tistory/21070B395466C1101D" alt="" />
+  </div>
+  <div class="profile-info">
+    <div class="profile-image"></div>
+    <h3><b>조정곤</b></h3>
+    <p>프로필이 없습니다.</p>
+  </div>
+  <div class="like">
+    <div class="d-flex align-items-center">
+      <img
+        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiNFRjY5MkUiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTEuMTggMTEuOTZoMy43NHY4LjM2SDEuMTh6TTE1Ljc1IDE2LjgzaDMuNzR2My40OWgtMy43NHpNNi4wNCA5LjEyaDMuNzR2MTEuMkg2LjA0ek0xMC45IDEzLjg0aDMuNzR2Ni40OEgxMC45eiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiNGRkNBMjIiIGQ9Ik0xNy40NCAxLjM3bDEuNjYgNCA0LjMxLjM0LTMuMjggMi44MSAxIDQuMjEtMy42OS0yLjI2LTMuNjkgMi4yNiAxLjAxLTQuMjEtMy4yOS0yLjgxIDQuMzItLjM0eiIvPgogICAgPC9nPgo8L3N2Zz4K"
+        alt=""
+      />
+      <span class="text-middle">&nbsp취향분석</span>
+    </div>
+  </div>
+  <div class="card-box">
+    <!-- 캐로젤 -->
+    <div
+      id="carouselExampleControls"
+      class="carousel slide"
+      data-bs-ride="carousel"
+    >
+      <div class="carousel-inner">
+        <div class="carousel-item active d-flex justify-content-between">
+          <div class="card-carousel">
+            <div>
+              <h6><b>영화</b></h6>
+              <div><b>★11</b></div>
+            </div>
+            <div class="text-small">보고싶어요 <span>0</span></div>
+          </div>
+          <div class="card-carousel">
+            <div>
+              <h6><b>TV프로그램</b></h6>
+              <div><b>★3</b></div>
+            </div>
+            <div class="text-small">보고싶어요 <span>0</span></div>
+          </div>
+          <div class="card-carousel">
+            <div>
+              <h6><b>책</b></h6>
+              <div><b>★0</b></div>
+            </div>
+            <div class="text-small">읽고싶어요 <span>0</span></div>
+          </div>
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleControls"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block script %}{% endblock script %}
