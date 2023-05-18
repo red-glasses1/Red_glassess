@@ -53,12 +53,16 @@
 
     <div class="d-flex justify-content-center m-5">
       <div class="d-grid gap-3 d-md-flex justify-content-md-end">
-        <button type="button" class="btn btn-outline-secondary">
+        <a href="{% url 'accounts:logout' %}" type="button" class="btn btn-outline-secondary">
           로그아웃
-        </button>
-        <button type="button" class="btn btn-outline-secondary">
-          회원탈퇴
-        </button>
+        </a>
+        <a href="{% url 'accounts:profile_edit' %}" type="button" class="btn btn-outline-secondary">
+          프로필 수정
+        </a>
+        <form action="{% url 'accounts:delete' %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-outline-secondary" value="회원탈퇴" onclick="return confirm('탈퇴 하시겠습니까?')">
+        </form>
       </div>
     </div>
   </div>

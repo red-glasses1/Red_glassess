@@ -1,23 +1,29 @@
-{% load bootstrap4 %}
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    {% bootstrap_jquery %}
-    <title>프로필 수정</title>
-</head>
-<body>
-<form action="" method="POST">
-    {% csrf_token %}
-    <table class="table">
-    {% bootstrap_form form %}
-    </table>
-    <input type="submit" value="프로필 수정">
-</form>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<title>회원정보수정</title>
+<link rel="stylesheet" href="{% static 'css/profile_edit.css' %}">
+{% endblock head %}
+
+{% block content %}
+<main>
+    <div class="container profile-edit_form">
+        <div class="mb-5">
+            <h3>회원정보 수정</h3>
+        </div>
+        <form action="{% url 'accounts:profile_edit' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <p>{{ form.username.label }}</p>
+                <p>{{ form.username }}</p>
+            </div>
+            <div>
+                <p>{{ form.image.label }}</p>
+                <p>{{ form.image }}</p>
+            </div>
+            <input type="submit" class="profile-submit_btn mt-3" value="프로필 수정">
+        </form>
+    </div>
+</main>
+{% endblock content %}
