@@ -57,12 +57,16 @@ main > div {
     width: 1px;
     background-color: rgb(230, 230, 230);
 }
-.feature-btn a {
+.feature-btn a, .comment-like-forms {
     width: 100%;
     height: 30px;
     transition: all 0.1s linear;
 }
 .feature-btn a:hover {
+    background-color: #f2f2f2;
+    border-radius: 6px;
+}
+.comment-like-forms:hover {
     background-color: #f2f2f2;
     border-radius: 6px;
 }
@@ -120,4 +124,30 @@ main > div {
 }
 .font-12 {
     font-size: 12px;
+}
+
+.update-input {
+    width: 93%;
+    border: none;
+    border-bottom: 1px solid rgb(165, 165, 165);
+    color: gray;
+    caret-color: #ff0558;
+    transition: all 0.1s linear;
+}
+.update-input:focus {
+    border-bottom: 1.5px solid #ff2f6e;
+    outline: none;
+}
+
+.recomment-like_btn {
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+    color: gray;
+}
+.recomment-unlike_btn {
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+    color: #ff2f6e;
 }

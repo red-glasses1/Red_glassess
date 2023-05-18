@@ -117,14 +117,12 @@
                                 <li class="card">
                                     <a href="{% url 'posts:detail' upcoming.id %}">
                                         <div class="image-wrapper">
-                                            <div class="rank-marker">{{ upcoming.rank }}</div>
                                             <img src="https://image.tmdb.org/t/p/w500/{{ upcoming.poster_path }}" alt="...">
                                         </div>
                                         <div class="card-body">
                                             <div class="card-text">{{ upcoming.title }}</div>
                                             <div>
-                                                <span>개봉 예정 : {{ upcoming.release_date }}</span>
-                                                <div class='color-pink'>평균★{{ upcoming.vote_average }}</div>
+                                                <span>개봉 예정 : <span class='color-pink'>{{ upcoming.release_date }}</span></span>
                                             </div>
                                         </div>
                                     </a>

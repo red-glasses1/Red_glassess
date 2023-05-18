@@ -32,8 +32,6 @@ def index(request):
     upcoming_response = requests.get(upcoming_url, params=params)
     upcoming_info = upcoming_response.json()
     upcoming_movies = sorted(upcoming_info['results'], key=lambda x: x['release_date'])
-    for i, upcoming_movie in enumerate(upcoming_movies, start=1):
-        upcoming_movie['rank'] = i
 
     context = {
         'popular_movies': popular_movies,

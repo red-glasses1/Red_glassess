@@ -228,3 +228,15 @@ li {
     opacity: 0.5;
     border-radius: 7px;
 }
+
+.comment-like_btn {
+    background-color: transparent;
+    color: #ff2f6e;
+    border: none;
+}
+.comment-unlike_btn {
+    background-color: #ff2f6e;
+    color: white;
+    border-radius: 5px;
+    border: none;
+}
