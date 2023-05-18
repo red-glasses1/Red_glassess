@@ -25,7 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sm1_3i3#as*84hp))yqruvm^6x4&jadq#o!_l4wuzj7%60lq57'
+
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -62,20 +67,20 @@ INSTALLED_APPS = [
 SOCIALACCOUNT_PROVIDERS = {
     'naver': {
         'APP': {
-            'client_id': 'UF8Um2i96zQ1Ub7isfjO',
-            'secret': 'is1QvEfkMH',
+            'client_id': os.getenv('NAVER_ID'),
+            'secret': os.getenv('NAVER_SECRET'),
         }
     },
     'google': {
         "APP": {
-            "client_id": "194534506939-s1ee0fvde4nugc57nkmjt8rk9akp8cdm.apps.googleusercontent.com",
-            "secret": "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",
+            "client_id": os.getenv('GOOGLE_ID'),
+            "secret": os.getenv('GOOGLE_SECRET'),
         }
     },
     'kakao': {
         "APP": {
-            "client_id": "e22737f031376a8c10d31387599a31ab", #REST API 키
-            "secret": "osJUnkUA0J65F6VoVN52A6CI8reUTp8R", #내 애플리케이션 -> 보안
+            "client_id": os.getenv('KAKAO_ID'), #REST API 키
+            "secret": os.getenv('KAKAO_ID'), #내 애플리케이션 -> 보안
         }
     }
 }

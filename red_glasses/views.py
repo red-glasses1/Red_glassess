@@ -1,11 +1,14 @@
 from django.shortcuts import render
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def index(request):
     popular_url = "https://api.themoviedb.org/3/movie/popular"
 
     params = {
-        "api_key": "6cd101ecd178ac88ad307ea8fccdf574",
+        "api_key": os.getenv('TMDB_API'),
         "language": "ko",
         "page": "1",
         "region": "KR",

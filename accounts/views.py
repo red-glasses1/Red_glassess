@@ -1,18 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib.auth.forms import PasswordChangeForm
-from .forms import CustomUserCreationForm, ProfileForm
+from .forms import CustomUserCreationForm, ProfileForm, CustomPasswordChangeForm
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-
-
-def profile_detail(request, username):
-    person = get_user_model().objects.get(username=username)
-    context = {
-        'person': person,
-    }
-    return render(request, 'accounts/profile.html', context)
 
 
 def login(request):
@@ -63,6 +54,14 @@ def signup(request):
     return render(request, 'index.html', context)
 
 
+def profile_detail(request, username):
+    person = get_user_model().objects.get(username=username)
+    context = {
+        'person': person,
+    }
+    return render(request, 'accounts/profile.html', context)
+
+
 # 프로필 수정
 @login_required
 def profile_edit(request):
@@ -83,13 +82,13 @@ def profile_edit(request):
 @login_required
 def password_change(request):
     if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
+        form = CustomPasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            return redirect('index')
+            return redirect('accounts:profile', request.user.username)
     else:
-        form = PasswordChangeForm(request.user)
+        form = CustomPasswordChangeForm(request.user)
     context = {
         'form':form,
     }

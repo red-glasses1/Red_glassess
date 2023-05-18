@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from posts.models import Post, Comment, Recomment
 from .forms import CommentForm, RecommentForm
-import requests
-
+import requests, os
+from dotenv import load_dotenv
+load_dotenv()
 
 # 디테일 페이지
 def detail(request, detail_pk):
@@ -12,7 +13,7 @@ def detail(request, detail_pk):
   detail_url = f"https://api.themoviedb.org/3/movie/{detail_pk}"
 
   params = {
-    "api_key": "6cd101ecd178ac88ad307ea8fccdf574",
+    "api_key": os.getenv('TMDB_API'),
     "language": "ko-KR",
     }
     
@@ -22,9 +23,13 @@ def detail(request, detail_pk):
   score = round(detail_response.json()['vote_average'], 2)
 
   # 영화 이미지 받기
-  gallery_url = f"https://api.themoviedb.org/3/movie/{detail_pk}/images?api_key=6cd101ecd178ac88ad307ea8fccdf574"
+  gallery_url = f"https://api.themoviedb.org/3/movie/{detail_pk}/images"
 
-  gallery_response = requests.get(gallery_url)
+  params = {
+    "api_key": os.getenv('TMDB_API'),
+    }
+
+  gallery_response = requests.get(gallery_url, params=params)
   gallery = gallery_response.json()['backdrops']
 
   # 영화 출연진 정보받기
@@ -96,7 +101,7 @@ def comment(request, detail_pk, comment_pk):
   detail_url = f"https://api.themoviedb.org/3/movie/{detail_pk}"
 
   params = {
-    "api_key": "6cd101ecd178ac88ad307ea8fccdf574",
+    "api_key": os.getenv('TMDB_API'),
     "language": "ko-KR",
     }
 
@@ -236,7 +241,7 @@ def search(request):
     search_movies_url = "https://api.themoviedb.org/3/search/movie"
 
     params = {
-      "api_key": "6cd101ecd178ac88ad307ea8fccdf574",
+      "api_key": os.getenv('TMDB_API'),
       "language": "ko-KR",
       "query": query,
       "page": "1",
