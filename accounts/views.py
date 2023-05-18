@@ -14,6 +14,7 @@ from django.contrib.auth.views import PasswordChangeView as AuthPasswordChangeVi
 # from accounts.forms import ProfileForm
 # from accounts.models import Profile
 from django.conf import settings
+from django.http import JsonResponse
 
 
 # 프로필 수정
@@ -128,3 +129,22 @@ def user_unfollow(request):
   redirect_url = request.META.get("HTTP_REFERER",'index')
   return redirect(redirect_url,nickname=request.user.username)
 
+@login_required
+def follow(request, username):
+    User = get_user_model()
+    person = User.objects.get(username=username)
+
+    if person != request.user:
+        if request.user in person.followers.all():
+            person.followers.remove(request.user)
+            is_followed = False
+        else:
+            person.followers.add(request.user)
+            is_followed = True
+        context = {
+            'is_followed' : is_followed,
+            'followings_count': person.followings.count(),
+            'followers_count': person.followers.count(),
+        }
+        return JsonResponse(context)
+    return redirect('accounts:profile', person.username)

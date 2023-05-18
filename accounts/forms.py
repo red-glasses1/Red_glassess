@@ -21,11 +21,12 @@ class ProfileForm(UserChangeForm):
             attrs={
                 'class': 'form-control',
             },
-        )
+        ),
+        required=False,
     )
   class Meta(UserChangeForm.Meta):
     model = get_user_model()
-    fields = ('username', 'photo')
+    fields = ('username', 'image')
 
 
 class CustomUserCreationForm(UserCreationForm):
