@@ -32,17 +32,44 @@
                             <input class="search-input border-0 bg-light ms-1" type="search" placeholder="콘텐츠, 인물, 컬렉션, 유저를 검색해보세요." name="q" aria-label="Search" id="search" value="{{ query }}">
                         </label>
                     </form>
-
+                    
                     {% if request.user.is_authenticated %}
-                    <a href="{% url 'accounts:profile' user.username %}">
-                        <div class="profile-form">
-                            {% if request.user.image %}
-                            <img src="{{ request.user.image.url }}" alt="">
-                            {% else %}
-                            <img src="{% static 'img/no_profile.jpg' %}" alt="">
-                            {% endif %}
-                        </div>
-                    </a>
+                    <div class="dropdown">
+                        <a data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="profile-form">
+                                {% if request.user.image %}
+                                <img src="{{ request.user.image.url }}" alt="">
+                                {% else %}
+                                <img src="{% static 'img/no_profile.jpg' %}" alt="">
+                                {% endif %}
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'accounts:profile' user.username %}">
+                                    <span class="material-symbols-outlined">person</span>
+                                    <p class='font-12 my-auto ms-2'>프로필</p>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'accounts:profile_edit' %}">
+                                    <span class="material-symbols-outlined">manage_accounts</span>
+                                    <p class='font-12 my-auto ms-2'>회원정보 수정</p>
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form action="{% url 'accounts:logout' %}" method='POST' class='dropdown-item font-12 p-0 ps-3'>
+                                    {% csrf_token %}
+                                    <div class='d-flex align-items-center'>
+                                        <span class="material-symbols-outlined">logout</span>
+                                        <input type="submit" value='로그아웃' class='dropdown-item p-0 ms-2'>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                     {% else %}
                     <!-- 로그인 및 회원가입 -->
                     <a type="button" data-bs-toggle="modal" data-bs-target="#loginModal" class="text-decoration-none text-secondary login-Btn">로그인</a>

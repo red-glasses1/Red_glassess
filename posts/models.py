@@ -11,6 +11,7 @@ class Post(models.Model):
     title = models.CharField(max_length=80)
     # image = models.ImageField(blank=False,upload_to='posters/')
     content = models.TextField()
+    poster = models.CharField(max_length=80)
     # score = models.FloatField(null=True)
     # Tag_set = models.ManyToManyField('Tag',blank=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_posts')
@@ -46,6 +47,7 @@ class Tag(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.IntegerField()
+    movie_title = models.CharField(max_length=20)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comments')
     content = models.CharField(max_length=200)
 #   rating = models.FloatField(verbose_name='평점')

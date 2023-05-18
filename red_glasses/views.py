@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from posts.models import Post, Comment
 import requests
 
 def index(request):

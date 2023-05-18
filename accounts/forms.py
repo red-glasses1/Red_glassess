@@ -5,7 +5,7 @@ from django import forms
 
 
 class ProfileForm(UserChangeForm):
-  username = forms.CharField(
+    username = forms.CharField(
         label='아이디',
         widget=forms.TextInput(
             attrs={
@@ -15,7 +15,7 @@ class ProfileForm(UserChangeForm):
         ),
     )
     
-  image = forms.ImageField(
+    image = forms.ImageField(
         label='이미지',
         widget=forms.ClearableFileInput(
             attrs={
@@ -24,9 +24,9 @@ class ProfileForm(UserChangeForm):
         ),
         required=False,
     )
-  class Meta(UserChangeForm.Meta):
-    model = get_user_model()
-    fields = ('username', 'image')
+    class Meta(UserChangeForm.Meta):
+        model = get_user_model()
+        fields = ('username', 'image')
 
 
 class CustomUserCreationForm(UserCreationForm):

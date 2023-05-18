@@ -61,11 +61,15 @@ main {
     border-radius: 50%;
     border: 1px solid lightgray;
     overflow: hidden;
+    cursor: pointer;
 }
 .profile-form img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.font-12 {
+    font-size: 12px;
 }
 
 /* footer 관련 */

@@ -38,51 +38,75 @@
       팔로잉 <a type="button" data-bs-toggle="modal" data-bs-target="#followingsModal"><b><span id="followings-count">{{ person.followings.all|length }}</span></b></a>
     </div>
   </div>
-  {% comment %} <div class="like">
-    <div class="d-flex align-items-center">
-      <img
-        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiNFRjY5MkUiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTEuMTggMTEuOTZoMy43NHY4LjM2SDEuMTh6TTE1Ljc1IDE2LjgzaDMuNzR2My40OWgtMy43NHpNNi4wNCA5LjEyaDMuNzR2MTEuMkg2LjA0ek0xMC45IDEzLjg0aDMuNzR2Ni40OEgxMC45eiIvPgogICAgICAgIDxwYXRoIGZpbGw9IiNGRkNBMjIiIGQ9Ik0xNy40NCAxLjM3bDEuNjYgNCA0LjMxLjM0LTMuMjggMi44MSAxIDQuMjEtMy42OS0yLjI2LTMuNjkgMi4yNiAxLjAxLTQuMjEtMy4yOS0yLjgxIDQuMzItLjM0eiIvPgogICAgPC9nPgo8L3N2Zz4K"
-        alt=""
-      />
-      <span class="text-middle">&nbsp취향분석</span>
-    </div>
-  </div> {% endcomment %}
-    <!-- 박스 -->
-      {% comment %} <div>
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                영화
-              </button>
-            </h2>
-          </div>
-          <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body"><div class="title">★0</div>
-            <div class="text">보고싶어요<span>0</span></div></div>
-          </div>
-        </div>
-      </div> {% endcomment %}
-      {% comment %} flush {% endcomment %}
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">영화</li>
-        <li class="list-group-item">★0</li>
-        <li class="list-group-item">보고싶어요<span>0</span></li>
-      </ul>
 
-    <div class="d-flex justify-content-center m-5">
-      <div class="d-grid gap-3 d-md-flex justify-content-md-end">
-        <a href="{% url 'accounts:logout' %}" type="button" class="btn btn-outline-secondary">
-          로그아웃
-        </a>
-        <a href="{% url 'accounts:profile_edit' %}" type="button" class="btn btn-outline-secondary">
-          프로필 수정
-        </a>
-        <form action="{% url 'accounts:delete' %}" method="POST">
-          {% csrf_token %}
-          <input type="submit" class="btn btn-outline-secondary" value="회원탈퇴" onclick="return confirm('탈퇴 하시겠습니까?')">
-        </form>
+
+  <div class="accordion accordion-flush border-top border-bottom" id="accordionFlushExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          <div class="d-flex gap-2">
+            <span><b>보고싶은 영화</b></span>
+            <span class="text-secondary">{{ person.like_posts.all|length }}</span>
+          </div>
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          {% for post in person.like_posts.all|dictsortreversed:'created_at' %}
+          <a href="{% url 'posts:detail' post.id %}">
+            <div class="d-flex align-items-center justify-content-between p-2 border-bottom like-post">
+              <div class="d-flex align-items-center gap-3">
+                <div class="poster-form">
+                  <img src="https://image.tmdb.org/t/p/original/{{ post.poster }}" alt="">
+                </div>
+                <div>{{ post.title }}</div>
+              </div>
+              <div class="post-release">개봉 : {{ post.released_at }}</div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
       </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+          <div class="d-flex gap-2">
+            <span><b>코멘트</b></span>
+            <span class="text-secondary">{{ person.comment_set.all|length }}</span>
+          </div>
+        </button>
+      </h2>
+      <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+          {% for comment in person.comment_set.all|dictsortreversed:'created_at' %}
+          <a href="{% url 'posts:comment' comment.movie comment.id %}">
+            <div class="comment-form d-flex justify-content-between gap-4">
+              <div class="d-flex flex-column gap-2">
+                <div class="movie-title">{{ comment.movie_title }}</div>
+                <div>{{ comment.content }}</div>
+              </div>
+              <div class="d-flex align-items-end comment-created_at">{{ comment.created_string }}</div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center m-4">
+    <div class="d-grid gap-3 d-md-flex justify-content-md-end align-items-center">
+      <a href="{% url 'accounts:logout' %}" type="button" class="feature-btn">
+        로그아웃
+      </a> ·
+      <a href="{% url 'accounts:profile_edit' %}" type="button" class="feature-btn">
+        회원정보 수정
+      </a> ·
+      <form action="{% url 'accounts:delete' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" class=" bg-transparent border-0 feature-btn" value="회원탈퇴" onclick="return confirm('탈퇴 하시겠습니까?')">
+      </form>
     </div>
   </div>
 </div>

@@ -1,54 +1,10 @@
-import os
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
 from .forms import CustomUserCreationForm, ProfileForm
-from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, TemplateView
-from pyexpat.errors import messages
-from accounts.models import Profile
-from django.contrib.auth.views import PasswordChangeView as AuthPasswordChangeView
-# from accounts.forms import ProfileForm
-# from accounts.models import Profile
-from django.conf import settings
+from django.contrib.auth import get_user_model, update_session_auth_hash
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
-
-
-# 프로필 수정
-@login_required
-def profile_edit(request):
-    if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('accounts:profile', username=request.user.username)
-    else:
-        form = ProfileForm(instance=request.user)
-    context = {
-        'form': form,
-    }
-    return render(request,'accounts/profile_edit.html', context)
-
-# 비밀번호 수정
-class PasswordChangeView(LoginRequiredMixin,AuthPasswordChangeView):
-  success_url = reverse_lazy('index:root')
-  template_name = 'accounts/password_change_form.html'
-  # 중복 비밀번호에 대한 검사
-  form_class = PasswordChangeForm
-  # 자체 뷰에서도 form_valid가 있으므로 부모의 메서드를 가져오게 되면 초기화를 해줘야 한다.(super())
-  def form_valid(self,form):
-    messages.success(self.request,'암호를 변경했습니다.')
-    return super().form_class(form)
-
-password_change = PasswordChangeView.as_view()
-
-class ProfileView(LoginRequiredMixin, TemplateView):
-    template_name = 'profile.html'
-
-profile = ProfileView.as_view()
 
 
 def profile_detail(request, username):
@@ -107,27 +63,44 @@ def signup(request):
     return render(request, 'index.html', context)
 
 
+# 프로필 수정
+@login_required
+def profile_edit(request):
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:profile', username=request.user.username)
+    else:
+        form = ProfileForm(instance=request.user)
+    context = {
+        'form': form,
+    }
+    return render(request,'accounts/profile_edit.html', context)
+
+
+# 비밀번호 수정
+@login_required
+def password_change(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('index')
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {
+        'form':form,
+    }
+    return render(request, 'accounts/password_change.html', context)
+
+
 @login_required
 def delete(request):
     request.user.delete()
     return redirect('index')
 
-
-@login_required
-def user_follow(request):
-  follow_user = get_object_or_404(get_user_model(),nickname=request.user.username,is_active=True)
-  request.follow_user.follower_set.add(follow_user)
-  follow_user.follower_set.add(request.user.username)
-  redirect_url = request.META.get("HTTP_REFERER",'index')
-  return redirect(redirect_url,nickname=request.user.username)
-
-@login_required
-def user_unfollow(request):
-  follow_user = get_object_or_404(get_user_model(),nickname=request.user.username,is_active=True)
-  request.follow_user.remove(follow_user)
-  follow_user.follower_set.remove(request.user.username)
-  redirect_url = request.META.get("HTTP_REFERER",'index')
-  return redirect(redirect_url,nickname=request.user.username)
 
 @login_required
 def follow(request, username):

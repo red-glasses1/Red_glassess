@@ -1,5 +1,4 @@
-from django.contrib.auth.views import LoginView, LogoutView
-from django.urls import path, re_path
+from django.urls import path
 from accounts import views
 
 app_name = 'accounts'
@@ -12,6 +11,4 @@ urlpatterns = [
   path('logout/', views.logout, name='logout'),
   path('delete/', views.delete, name='delete'),
   path('<str:username>/follower/', views.follow, name='follow'),
-  re_path(r'^(?P<nickname>[\w.@+-]+)/follow/$', views.user_follow,name='user_follow'),
-  re_path(r'^(?P<nickname>[\w.@+-]+)/unfollow/$',views.user_unfollow,name='user_unfollow'),
 ]

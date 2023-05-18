@@ -1,43 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from django.urls import reverse_lazy
-from django.views.generic import DetailView
 from posts.models import Post, Comment, Recomment
 from .forms import CommentForm, RecommentForm
 import requests
-
-
-# Create your views here.
-# 포스트 생성
-# @login_required
-# def post_new(request):
-#   if request.method == 'POST':
-#     form = PostForm(request.POST,request.FILES)
-#     if form.is_valid():
-#       post = form.save(commit=False)
-#       post.author = request.user
-#       post.save()
-#       # 모델에 작성할 수도 있음
-#       # for tag_name in post.extract_tag_list():
-#       #   tag, _ = Tag.objects.get_or_create(name='tag_name')
-#       post.tag_set.add(*post.extract_tag_list())
-#       messages.info(request, '포스팅을 저장했습니다.')
-#       return redirect('/')
-#   else:
-#     # get 요청일때
-#     form = PostForm()
-#   return render(request, 'post_form.html',{
-#     'form':form
-#   })
-# # 메인 페이지 (포스팅된 리스트 나열), 검색기능 구현 - FBV
-# def post_list(request):
-#   qs = Post.objects.all()
-#   q = request.GET.get('q','')
-#   if q:
-#     qs = qs.filter(Q(title__icontains=q) & Q(content__icontains=q)) # 모델의 타이틀 속성 중에 q 인자에 삽입된 값 을 검색
-#   return render(request,'post_search.html',{'qs': qs,'q':q})
 
 
 # 디테일 페이지
@@ -73,8 +39,9 @@ def detail(request, detail_pk):
       title = movie_data['title']
       content = movie_data['overview']
       release_date = movie_data['release_date']
+      poster = movie_data['poster_path']
       posts = Post.objects.all()
-      movie = Post(id=id, title=title, content=content, released_at=release_date)
+      movie = Post(id=id, title=title, content=content, poster=poster, released_at=release_date)
       if movie not in posts:
         movie.save()
   else:
@@ -147,11 +114,13 @@ def comment(request, detail_pk, comment_pk):
 # 코멘트 생성
 @login_required
 def comment_create(request, detail_pk):
+  movie_title = request.GET.get('movie_title')
   if request.method == 'POST':
     form = CommentForm(request.POST)
     if form.is_valid():
       comment = form.save(commit=False)
       comment.movie = detail_pk
+      comment.movie_title = movie_title
       comment.user = request.user
       comment.save()
       return redirect('posts:detail', detail_pk)

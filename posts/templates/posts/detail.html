@@ -234,7 +234,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <!-- 코멘트 입력부분 -->
-            <form action="{% url 'posts:comment_create' detail.id %}" method="POST" class="d-flex flex-column log-input w-100 gap-2">
+            <form action="{% url 'posts:comment_create' detail.id %}?movie_title={{ detail.title }}" method="POST" class="d-flex flex-column log-input w-100 gap-2">
                 {% csrf_token %}
                 <textarea name="content" id="content" type="text" cols="30" rows="10" class="border-0 chat-input" placeholder="이 영화에 대한 생각을 자유롭게 표현해주세요."></textarea>
                 <div class="d-flex flex-column align-items-end">
