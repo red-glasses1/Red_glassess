@@ -8,7 +8,7 @@ detailForms.forEach((form) => {
         const detailId = event.target.dataset.detailId
         axios({
             method: 'post',
-            url: `http://127.0.0.1:8000/posts/${detailId}/likes/`,
+            url: `/posts/${detailId}/likes/`,
             headers: {'X-CSRFToken': detailCsrftoken},
         })
             .then((response) => {

@@ -10,7 +10,7 @@ recommentForms.forEach((form) => {
         const recommentId = event.target.dataset.recommentId
         axios({
             method: 'post',
-            url: `http://127.0.0.1:8000/posts/${detailId}/comments/${commentId}/recomments/${recommentId}/likes/`,
+            url: `/posts/${detailId}/comments/${commentId}/recomments/${recommentId}/likes/`,
             headers: {'X-CSRFToken': recommentCsrftoken},
         })
             .then((response) => {

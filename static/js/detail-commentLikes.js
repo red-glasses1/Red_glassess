@@ -9,7 +9,7 @@ commentForms.forEach((form) => {
         const commentId = event.target.dataset.commentId
         axios({
             method: 'post',
-            url: `http://127.0.0.1:8000/posts/${detailId}/comments/${commentId}/likes/`,
+            url: `/posts/${detailId}/comments/${commentId}/likes/`,
             headers: {'X-CSRFToken': commentCsrftoken},
         })
             .then((response) => {
