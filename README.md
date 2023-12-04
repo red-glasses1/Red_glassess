@@ -1,9 +1,3 @@
-# 왓챠피디아 클론 프로젝트 
-
-[프로젝트 문서](https://hg-edu.notion.site/1-3f6ddcf557534f7780632795446d2dc5)
-
-[배포 페이지](https://port-0-red-glassess-13aenn2blhthwfuc.sel4.cloudtype.app/)
-
 # 왓챠피디아 클론 팀 프로젝트
 
 기간: 2023년 5월 9일 → 2023년 5월 19일
