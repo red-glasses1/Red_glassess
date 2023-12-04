@@ -4,8 +4,6 @@
 
 [배포 페이지](https://port-0-red-glassess-13aenn2blhthwfuc.sel4.cloudtype.app/)
 
-* [발표자료](https://github.com/mangji12/Red_glassess/blob/main/Red_glasses%20%E1%84%8B%E1%85%AA%E1%86%BA%E1%84%8E%E1%85%A3%E1%84%91%E1%85%B5%E1%84%83%E1%85%B5%E1%84%8B%E1%85%A1.pdf)
-
 # 왓챠피디아 클론 팀 프로젝트
 
 기간: 2023년 5월 9일 → 2023년 5월 19일
