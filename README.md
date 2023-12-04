@@ -66,10 +66,6 @@
     
     [Watcha Pedia](https://port-0-red-glassess-13aenn2blhthwfuc.sel4.cloudtype.app/)
     
-- **소스코드**
-    
-    [https://github.com/red-glasses1/Red_glassess.git](https://github.com/red-glasses1/Red_glassess.git)
-    
 - **발표 자료**
     
     ![Red_glasses 왓챠피디아1024_6.jpg](%E1%84%8B%E1%85%AA%E1%86%BA%E1%84%8E%E1%85%A3%E1%84%91%E1%85%B5%E1%84%83%E1%85%B5%E1%84%8B%E1%85%A1%20%E1%84%8F%E1%85%B3%E1%86%AF%E1%84%85%E1%85%A9%E1%86%AB%20%E1%84%90%E1%85%B5%E1%86%B7%20%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%8C%E1%85%A6%E1%86%A8%E1%84%90%E1%85%B3%2078e91e5fc2514e569b60313c8bc77eda/Red_glasses_%25E1%2584%258B%25E1%2585%25AA%25E1%2586%25BA%25E1%2584%258E%25E1%2585%25A3%25E1%2584%2591%25E1%2585%25B5%25E1%2584%2583%25E1%2585%25B5%25E1%2584%258B%25E1%2585%25A11024_6.jpg)
