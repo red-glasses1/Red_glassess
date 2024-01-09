@@ -28,7 +28,7 @@ def detail(request, detail_pk):
     gallery_url = f"https://api.themoviedb.org/3/movie/{detail_pk}/images"
 
     params = {
-        "api_key": os.getenv("TMDB_API"),
+        "api_key": "ad54a63bd524b655ee79f3f3108ba520",  # os.getenv("TMDB_API"),
     }
 
     gallery_response = requests.get(gallery_url, params=params)
@@ -109,7 +109,7 @@ def comment(request, detail_pk, comment_pk):
     detail_url = f"https://api.themoviedb.org/3/movie/{detail_pk}"
 
     params = {
-        "api_key": os.getenv("TMDB_API"),
+        "api_key": "ad54a63bd524b655ee79f3f3108ba520",  # os.getenv("TMDB_API"),
         "language": "ko-KR",
     }
 
@@ -249,7 +249,7 @@ def search(request):
         search_movies_url = "https://api.themoviedb.org/3/search/movie"
 
         params = {
-            "api_key": os.getenv("TMDB_API"),
+            "api_key": "ad54a63bd524b655ee79f3f3108ba520",  # os.getenv("TMDB_API"),
             "language": "ko-KR",
             "query": query,
             "page": "1",
