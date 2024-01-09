@@ -46,7 +46,7 @@
 
 - **배포 페이지**
     
-    [Watcha Pedia](https://port-0-red-glassess-13aenn2blhthwfuc.sel4.cloudtype.app/)
+    [Watcha Pedia](https://port-0-red-glassess-3wh3o2blr663egz.sel5.cloudtype.app/)
     
 - **발표 자료**
     
